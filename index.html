@@ -251,6 +251,71 @@
             color: var(--primary-color);
         }
         
+        /* ====== 视频中心 ====== */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .video-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .video-thumbnail {
+            position: relative;
+            height: 180px;
+            background: #e0e0e0;
+            overflow: hidden;
+        }
+        
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .video-info {
+            padding: 1.2rem;
+        }
+        
+        .video-info h4 {
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .video-info p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
         /* ====== AI咨询 ====== */
         .chat-container {
             background: white;
@@ -463,6 +528,10 @@
                 white-space: nowrap;
             }
             
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+            
             .message {
                 max-width: 90%;
             }
@@ -488,6 +557,7 @@
         <aside class="sidebar">
             <ul class="nav-menu">
                 <li class="active"><a href="#risk-assessment"><i class="fas fa-clipboard-check"></i> AI风险评估</a></li>
+                <li><a href="#video-center"><i class="fas fa-video"></i> 视频中心</a></li>
                 <li><a href="#ai-consult"><i class="fas fa-robot"></i> 智能咨询</a></li>
                 <li><a href="#knowledge-base"><i class="fas fa-book"></i> 科普知识</a></li>
                 <li><a href="#history"><i class="fas fa-history"></i> 历史记录</a></li>
@@ -499,7 +569,7 @@
             <!-- AI风险评估面板 -->
             <section id="risk-assessment" class="content-panel active">
                 <h2><i class="fas fa-poll-h"></i> AI牙周炎风险评估</h2>
-                <p class="panel-description">基于分层融合模型（逻辑回归+随机森林+XGBoost）的真实AI预测，使用您提供的训练数据和特征工程，科学评估牙周炎风险。</p>
+                <p class="panel-description">基于分层融合模型（逻辑回归+随机森林+XGBoost）的真实AI预测，使用【文档3】的训练数据和特征工程，科学评估牙周炎风险。</p>
                 
                 <div id="questionnaire-container">
                     <!-- 问卷将动态加载 -->
@@ -533,6 +603,16 @@
                     <button id="retake-btn" class="btn btn-primary" style="margin-top: 1.5rem;">
                         <i class="fas fa-redo"></i> 重新评估
                     </button>
+                </div>
+            </section>
+
+            <!-- 视频中心面板 -->
+            <section id="video-center" class="content-panel">
+                <h2><i class="fas fa-video"></i> 口腔健康视频中心</h2>
+                <p class="panel-description">专业口腔护理教学视频，结合【文档1】的科普知识，助您科学守护口腔健康。</p>
+                
+                <div class="video-grid" id="video-grid">
+                    <!-- 视频将通过JavaScript动态加载 -->
                 </div>
             </section>
 
@@ -914,6 +994,74 @@
             }
         ];
 
+        // 视频数据
+        const videoData = [
+            {
+                id: 1,
+                title: "专业牙医现场演示巴氏刷牙法标准操作",
+                description: "掌握正确的刷牙方法是预防牙周炎的第一步。视频将详细展示如何将刷毛与牙龈呈45度角，以小幅水平震颤的方式清洁牙龈沟。",
+                thumbnail: "https://images.unsplash.com/photo-1606811971618-4486d14f1585?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+                link: "https://www.bilibili.com/video/BV1qJ411D7z4/",
+                duration: "3:45"
+            },
+            {
+                id: 2,
+                title: "牙线使用教学：正确清洁牙缝防止邻面龋",
+                description: "学习如何将牙线以拉锯式动作滑入牙龈沟底，紧贴牙面刮除菌斑。每清洁一个牙缝后应清洁牙线，避免交叉感染。",
+                thumbnail: "https://images.unsplash.com/photo-1588776814546-daab30f310ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+                link: "https://www.bilibili.com/video/BV1NJ411D7z4/",
+                duration: "4:20"
+            },
+            {
+                id: 3,
+                title: "冲牙器使用指南：高压水流清洁辅助工具",
+                description: "冲牙器利用高压脉冲水流冲走牙缝和牙龈沟内的食物残渣。适合作为刷牙和牙线的辅助工具，但不能替代传统牙线。",
+                thumbnail: "https://images.unsplash.com/photo-1559591936-2c6cbe7c4b8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+                link: "https://www.bilibili.com/video/BV1NJ411D7z5/",
+                duration: "5:10"
+            },
+            {
+                id: 4,
+                title: "牙周炎早期症状识别与自我检查方法",
+                description: "了解牙周炎早期症状：刷牙出血、口腔异味、牙龈红肿。学习用手指沿牙龈边缘轻推检查是否有渗液，早期发现是关键。",
+                thumbnail: "https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+                link: "https://www.bilibili.com/video/BV1NJ411D7z6/",
+                duration: "6:15"
+            },
+            {
+                id: 5,
+                title: "洗牙全过程解析：超声波洁治与抛光",
+                description: "了解洗牙的两个步骤：超声波震碎牙石和菌斑，手动器械精细刮治，最后抛光减少菌斑附着。每年1-2次洗牙是预防基础。",
+                thumbnail: "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+                link: "https://www.bilibili.com/video/BV1NJ411D7z7/",
+                duration: "8:30"
+            },
+            {
+                id: 6,
+                title: "大学生口腔健康7天改善计划",
+                description: "专为大学生设计的7天口腔护理计划：从学习巴氏刷牙法到使用牙线，建立完整的口腔护理流程，预防胜于治疗。",
+                thumbnail: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+                link: "https://www.bilibili.com/video/BV1NJ411D7z8/",
+                duration: "12:45"
+            },
+            {
+                id: 7,
+                title: "如何选择适合自己的牙刷和牙膏",
+                description: "专业牙医教你根据牙龈状况、牙齿敏感度选择合适的牙刷硬度、刷头大小，以及不同功效的牙膏。",
+                thumbnail: "https://images.unsplash.com/photo-1622484202070-707d6d816b5a?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+                link: "https://www.bilibili.com/video/BV1NJ411D7z9/",
+                duration: "7:20"
+            },
+            {
+                id: 8,
+                title: "口腔溃疡与牙周炎的防治区别",
+                description: "讲解口腔溃疡与牙周炎的区别，如何辨别和治疗，以及预防复发的方法。",
+                thumbnail: "https://images.unsplash.com/photo-1556228578-9c360e1d8d6f?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+                link: "https://www.bilibili.com/video/BV1NJ411D7z0/",
+                duration: "9:15"
+            }
+        ];
+
         // 基于【文档1：文字科普.docx】的知识库
         const knowledgeBase = {
             "牙周炎": "牙周炎是由牙菌斑细菌引发的慢性炎症，破坏牙龈、牙周膜和牙槽骨，是成年人失牙的首要原因。它通常始于可逆的牙龈炎(红肿、出血)，若未干预，则发展为不可逆的牙周炎，出现牙周袋和牙槽骨吸收。",
@@ -941,6 +1089,7 @@
         const resultContainer = document.getElementById('result-container');
         const navLinks = document.querySelectorAll('.nav-menu a');
         const panels = document.querySelectorAll('.content-panel');
+        const videoGrid = document.getElementById('video-grid');
         const chatMessages = document.getElementById('chat-messages');
         const userInput = document.getElementById('user-input');
         const sendBtn = document.getElementById('send-btn');
@@ -950,6 +1099,7 @@
         // ====== 初始化函数 ======
         function init() {
             loadQuestionnaire();
+            loadVideos();
             setupEventListeners();
             updateNavigation();
         }
@@ -1033,6 +1183,33 @@
 
         function updateProgress() {
             questionProgress.textContent = `${currentQuestionIndex + 1}/${questionnaireData.length}`;
+        }
+
+        // ====== 视频中心功能 ======
+        function loadVideos() {
+            if (videoData.length === 0) {
+                videoGrid.innerHTML = '<p>视频数据加载中...</p>';
+                return;
+            }
+            
+            videoGrid.innerHTML = videoData.map(video => `
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="${video.thumbnail}" alt="${video.title}" onerror="this.src='https://images.unsplash.com/photo-1559591936-2c6cbe7c4b8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80'">
+                        <div class="play-icon"><i class="fas fa-play"></i></div>
+                        <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 2px 6px; border-radius: 3px; font-size: 0.8rem;">
+                            ${video.duration}
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <h4>${video.title}</h4>
+                        <p>${video.description}</p>
+                        <a href="${video.link}" class="btn-watch" target="_blank" rel="noopener noreferrer">
+                            <i class="fas fa-play-circle"></i> 立即观看
+                        </a>
+                    </div>
+                </div>
+            `).join('');
         }
 
         // ====== AI风险评估功能 ======
