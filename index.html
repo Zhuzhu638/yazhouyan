@@ -2,1612 +2,396 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>大学生牙周健康AI智能测评系统</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        /* ====== 全局样式 ====== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         :root {
             --primary-color: #2c8cff;
-            --secondary-color: #6c757d;
             --success-color: #28a745;
-            --danger-color: #dc3545;
             --warning-color: #ffc107;
-            --light-color: #f8f9fa;
+            --danger-color: #dc3545;
             --dark-color: #343a40;
             --border-radius: 8px;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: #f5f7fa;
+            color: #333;
         }
-        
-        /* ====== 布局结构 ====== */
+
         .main-header {
             background: linear-gradient(135deg, var(--primary-color), #1e6fd9);
-            color: white;
+            color: #fff;
             padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: var(--shadow);
             position: sticky;
             top: 0;
             z-index: 1000;
         }
-        
+
         .logo {
             font-size: 1.5rem;
             font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
-        
-        .nav-links {
-            display: flex;
-            gap: 1.5rem;
-        }
-        
+
         .nav-links a {
-            color: white;
+            color: #fff;
+            margin-left: 1rem;
             text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: var(--border-radius);
-            transition: var(--transition);
         }
-        
-        .nav-links a:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-        
+
         .container {
             display: flex;
             min-height: calc(100vh - 120px);
         }
-        
+
         .sidebar {
             width: 250px;
-            background: white;
+            background: #fff;
             border-right: 1px solid #e0e0e0;
             padding: 1.5rem 0;
-            box-shadow: var(--shadow);
         }
-        
+
         .nav-menu {
             list-style: none;
         }
-        
-        .nav-menu li {
-            margin-bottom: 5px;
-        }
-        
-        .nav-menu a {
+
+        .nav-menu li a {
             display: flex;
             align-items: center;
             gap: 10px;
             padding: 0.8rem 1.5rem;
             color: #555;
             text-decoration: none;
-            transition: var(--transition);
         }
-        
-        .nav-menu a:hover {
-            background-color: #f5f5f5;
-            color: var(--primary-color);
-        }
-        
+
         .nav-menu li.active a {
-            background-color: rgba(44, 140, 255, 0.1);
-            color: var(--primary-color);
+            background: rgba(44,140,255,0.1);
             border-left: 4px solid var(--primary-color);
+            color: var(--primary-color);
         }
-        
+
         .main-content {
             flex: 1;
             padding: 2rem;
-            overflow-y: auto;
         }
-        
+
         .content-panel {
             display: none;
-            animation: fadeIn 0.5s ease;
         }
-        
+
         .content-panel.active {
             display: block;
         }
-        
-        .main-footer {
-            background-color: var(--dark-color);
-            color: white;
-            text-align: center;
-            padding: 1rem;
-            font-size: 0.9rem;
-        }
-        
-        /* ====== 组件样式 ====== */
+
         .panel-description {
+            margin-bottom: 1.5rem;
             color: #666;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #eee;
         }
-        
-        .btn {
-            padding: 0.6rem 1.2rem;
-            border: none;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            font-size: 1rem;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background-color: #1e6fd9;
-            transform: translateY(-2px);
-        }
-        
-        .btn-secondary {
-            background-color: var(--secondary-color);
-            color: white;
-        }
-        
-        .btn-success {
-            background-color: var(--success-color);
-            color: white;
-        }
-        
-        .btn-danger {
-            background-color: var(--danger-color);
-            color: white;
-        }
-        
-        .btn-watch {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: var(--border-radius);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 0.9rem;
-        }
-        
-        /* ====== 问卷组件 ====== */
+
+        /* ===== 问卷 ===== */
         .question-card {
-            background: white;
+            background: #fff;
             padding: 1.5rem;
             border-radius: var(--border-radius);
             margin-bottom: 1.5rem;
             box-shadow: var(--shadow);
             border-left: 4px solid var(--primary-color);
         }
-        
-        .question-card h3 {
-            margin-bottom: 1rem;
-            color: #333;
-        }
-        
-        .options {
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-        }
-        
+
         .options label {
             display: flex;
             align-items: center;
             gap: 10px;
             padding: 0.8rem;
-            border: 1px solid #e0e0e0;
+            border: 1px solid #ddd;
             border-radius: var(--border-radius);
+            margin-bottom: 0.5rem;
             cursor: pointer;
-            transition: var(--transition);
         }
-        
-        .options label:hover {
-            background-color: #f8f9fa;
-            border-color: var(--primary-color);
-        }
-        
-        .options input[type="radio"],
-        .options input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-        }
-        
+
         .action-buttons {
             display: flex;
             justify-content: space-between;
-            align-items: center;
             margin-top: 2rem;
-            padding-top: 1rem;
-            border-top: 1px solid #eee;
         }
-        
-        #question-progress {
-            font-weight: bold;
-            color: var(--primary-color);
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
         }
-        
-        /* ====== 视频中心 ====== */
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: #fff;
+        }
+
+        .btn-success {
+            background: var(--success-color);
+            color: #fff;
+        }
+
+        /* ===== 视频中心 ===== */
         .video-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 1.5rem;
-            margin-top: 1.5rem;
         }
-        
+
         .video-card {
-            background: white;
+            background: #fff;
             border-radius: var(--border-radius);
             overflow: hidden;
             box-shadow: var(--shadow);
-            transition: var(--transition);
         }
-        
-        .video-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-        }
-        
+
         .video-thumbnail {
+            height: 160px;
+            background: #ccc;
             position: relative;
-            height: 180px;
-            background: #e0e0e0;
-            overflow: hidden;
         }
-        
+
         .video-thumbnail img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        
+
         .play-icon {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 60px;
-            height: 60px;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 1.5rem;
         }
-        
+
         .video-info {
-            padding: 1.2rem;
+            padding: 1rem;
         }
-        
-        .video-info h4 {
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-        }
-        
-        .video-info p {
-            color: #666;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-        
-        /* ====== AI咨询 ====== */
+
+        /* ===== AI咨询 ===== */
         .chat-container {
-            background: white;
+            background: #fff;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             overflow: hidden;
-            margin-top: 1.5rem;
         }
-        
+
         .chat-messages {
             height: 400px;
             overflow-y: auto;
             padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
         }
-        
+
         .message {
             display: flex;
             gap: 10px;
-            max-width: 80%;
+            margin-bottom: 1rem;
         }
-        
-        .user-message {
-            margin-left: auto;
-            flex-direction: row-reverse;
-        }
-        
-        .bot-message {
-            margin-right: auto;
-        }
-        
+
         .avatar {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             background: var(--primary-color);
-            color: white;
+            color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
-            flex-shrink: 0;
         }
-        
-        .user-message .avatar {
-            background: var(--secondary-color);
-        }
-        
+
         .bubble {
-            padding: 0.8rem 1.2rem;
-            border-radius: 18px;
             background: #f1f1f1;
+            padding: 0.8rem 1rem;
+            border-radius: 18px;
         }
-        
-        .user-message .bubble {
-            background: var(--primary-color);
-            color: white;
-            border-top-right-radius: 4px;
-        }
-        
-        .bot-message .bubble {
-            border-top-left-radius: 4px;
-        }
-        
+
         .chat-input-area {
             display: flex;
             padding: 1rem;
             border-top: 1px solid #eee;
-            background: #f8f9fa;
         }
-        
-        #user-input {
+
+        .chat-input-area input {
             flex: 1;
-            padding: 0.8rem 1rem;
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            font-size: 1rem;
-        }
-        
-        #send-btn {
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: var(--border-radius);
-            margin-left: 0.5rem;
-            cursor: pointer;
-        }
-        
-        .quick-questions {
-            padding: 0.8rem 1rem;
-            background: #f8f9fa;
-            border-top: 1px solid #eee;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-        
-        .quick-q-btn {
-            background: white;
-            border: 1px solid #ddd;
-            padding: 0.4rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        
-        .quick-q-btn:hover {
-            background: #f0f0f0;
-        }
-        
-        /* ====== 风险评估结果 ====== */
-        .result-container {
-            background: white;
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            margin-top: 2rem;
-            box-shadow: var(--shadow);
-        }
-        
-        .risk-meter {
-            height: 20px;
-            background: #e9ecef;
-            border-radius: 10px;
-            margin: 1.5rem 0;
-            overflow: hidden;
-        }
-        
-        .risk-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--success-color), var(--warning-color), var(--danger-color));
-            transition: width 1s ease;
-        }
-        
-        .risk-level {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin: 1rem 0;
-        }
-        
-        .risk-low { color: var(--success-color); }
-        .risk-medium { color: var(--warning-color); }
-        .risk-high { color: var(--danger-color); }
-        
-        .factors-list {
-            margin: 1.5rem 0;
-        }
-        
-        .factor-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             padding: 0.8rem;
-            border-bottom: 1px solid #eee;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
         }
-        
-        .factor-name {
-            font-weight: 500;
+
+        /* ===== 科普知识 ===== */
+        .knowledge-sections .question-card {
+            margin-bottom: 1.5rem;
         }
-        
-        .factor-impact {
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: bold;
-        }
-        
-        .impact-low { background: #d4edda; color: #155724; }
-        .impact-medium { background: #fff3cd; color: #856404; }
-        .impact-high { background: #f8d7da; color: #721c24; }
-        
-        /* ====== 动画 ====== */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes typing {
-            0% { width: 0; }
-            100% { width: 100%; }
-        }
-        
-        /* ====== 响应式设计 ====== */
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-            
-            .sidebar {
-                width: 100%;
-                border-right: none;
-                border-bottom: 1px solid #e0e0e0;
-            }
-            
-            .nav-menu {
-                display: flex;
-                overflow-x: auto;
-            }
-            
-            .nav-menu li {
-                margin-bottom: 0;
-                margin-right: 5px;
-            }
-            
-            .nav-menu a {
-                white-space: nowrap;
-            }
-            
-            .video-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .message {
-                max-width: 90%;
-            }
+
+        .main-footer {
+            background: var(--dark-color);
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.9rem;
         }
     </style>
 </head>
+
 <body>
-    <!-- 顶栏 -->
-    <header class="main-header">
-        <div class="logo">
-            <span>🦷</span>
-            <span>大学生牙周健康AI智能测评</span>
-        </div>
-        <nav class="nav-links">
-            <a href="#"><i class="fas fa-home"></i> 首页</a>
-            <a href="#"><i class="fas fa-user"></i> 个人中心</a>
-        </nav>
-    </header>
 
-    <!-- 主体容器 -->
-    <div class="container">
-        <!-- 侧边栏导航 -->
-        <aside class="sidebar">
-            <ul class="nav-menu">
-                <li class="active"><a href="#risk-assessment"><i class="fas fa-clipboard-check"></i> AI风险评估</a></li>
-                <li><a href="#video-center"><i class="fas fa-video"></i> 视频中心</a></li>
-                <li><a href="#ai-consult"><i class="fas fa-robot"></i> 智能咨询</a></li>
-                <li><a href="#knowledge-base"><i class="fas fa-book"></i> 科普知识</a></li>
-                <li><a href="#history"><i class="fas fa-history"></i> 历史记录</a></li>
-            </ul>
-        </aside>
+<!-- ===== 顶部导航 ===== -->
+<header class="main-header">
+    <div class="logo">🦷 大学生牙周健康AI测评</div>
+    <nav class="nav-links">
+        <a href="#">首页</a>
+    </nav>
+</header>
 
-        <!-- 主内容区域 -->
-        <main class="main-content">
-            <!-- AI风险评估面板 -->
-            <section id="risk-assessment" class="content-panel active">
-                <h2><i class="fas fa-poll-h"></i> AI牙周炎风险评估</h2>
-                <p class="panel-description">基于分层融合模型（逻辑回归+随机森林+XGBoost）的真实AI预测，使用【文档3】的训练数据和特征工程，科学评估牙周炎风险。</p>
-                
-                <div id="questionnaire-container">
-                    <!-- 问卷将动态加载 -->
+<div class="container">
+
+    <!-- ===== 侧边栏 ===== -->
+    <aside class="sidebar">
+        <ul class="nav-menu">
+            <li class="active"><a href="#risk"><i class="fas fa-clipboard-check"></i> AI风险评估</a></li>
+            <li><a href="#video"><i class="fas fa-video"></i> 视频中心</a></li>
+            <li><a href="#ai"><i class="fas fa-robot"></i> 智能咨询</a></li>
+            <li><a href="#knowledge"><i class="fas fa-book"></i> 科普知识</a></li>
+        </ul>
+    </aside>
+
+    <!-- ===== 主内容 ===== -->
+    <main class="main-content">
+
+        <!-- AI风险评估 -->
+        <section id="risk" class="content-panel active">
+            <h2>AI牙周炎风险评估</h2>
+            <p class="panel-description">基于逻辑回归 + 随机森林 + XGBoost 的融合模型进行风险评估。</p>
+
+            <div class="question-card">
+                <h3>示例问题：您每天刷牙几次？</h3>
+                <div class="options">
+                    <label><input type="radio" name="brush"> 不刷牙</label>
+                    <label><input type="radio" name="brush"> 每天1次</label>
+                    <label><input type="radio" name="brush"> 每天2次</label>
                 </div>
-                
-                <div class="action-buttons">
-                    <button id="prev-btn" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> 上一题</button>
-                    <span id="question-progress">1/23</span>
-                    <button id="next-btn" class="btn btn-primary">下一题 <i class="fas fa-arrow-right"></i></button>
-                    <button id="submit-btn" class="btn btn-success" style="display:none;"><i class="fas fa-brain"></i> AI智能评估</button>
-                </div>
-                
-                <!-- 评估结果区域 -->
-                <div id="result-container" class="result-container" style="display:none;">
-                    <h3><i class="fas fa-chart-line"></i> AI评估结果</h3>
-                    <div class="risk-meter">
-                        <div class="risk-fill" id="risk-fill" style="width: 0%"></div>
-                    </div>
-                    <div class="risk-level" id="risk-level">评估中...</div>
-                    <div id="risk-score">风险概率: 计算中...</div>
-                    
-                    <div class="factors-list" id="factors-list">
-                        <!-- 风险因素将动态加载 -->
-                    </div>
-                    
-                    <h4><i class="fas fa-lightbulb"></i> AI个性化建议</h4>
-                    <div id="ai-advice">
-                        <!-- AI建议将动态加载 -->
-                    </div>
-                    
-                    <button id="retake-btn" class="btn btn-primary" style="margin-top: 1.5rem;">
-                        <i class="fas fa-redo"></i> 重新评估
-                    </button>
-                </div>
-            </section>
+            </div>
 
-            <!-- 视频中心面板 -->
-            <section id="video-center" class="content-panel">
-                <h2><i class="fas fa-video"></i> 口腔健康视频中心</h2>
-                <p class="panel-description">专业口腔护理教学视频，结合【文档1】的科普知识，助您科学守护口腔健康。</p>
-                
-                <div class="video-grid" id="video-grid">
-                    <!-- 视频将通过JavaScript动态加载 -->
-                </div>
-            </section>
+            <div class="action-buttons">
+                <button class="btn btn-primary">上一题</button>
+                <button class="btn btn-success">提交评估</button>
+            </div>
+        </section>
 
-            <!-- 智能咨询面板 -->
-            <section id="ai-consult" class="content-panel">
-                <h2><i class="fas fa-robot"></i> 牙周健康AI助手</h2>
-                <p class="panel-description">基于【文档1：文字科普.docx】的专业知识库，24小时在线解答您关于牙周健康的疑问。</p>
-                
-                <div class="chat-container">
-                    <div class="chat-messages" id="chat-messages">
-                        <div class="message bot-message">
-                            <div class="avatar">🤖</div>
-                            <div class="bubble">您好！我是您的牙周健康AI助手，基于专业的牙周医学知识库。我可以为您解答关于牙周炎预防、刷牙方法、牙线使用、洗牙、口腔清洁工具等问题。请问有什么可以帮您？</div>
-                        </div>
-                    </div>
-                    
-                    <div class="chat-input-area">
-                        <input type="text" id="user-input" placeholder="输入您的问题，例如：如何正确使用牙线？什么是巴氏刷牙法？">
-                        <button id="send-btn"><i class="fas fa-paper-plane"></i> 发送</button>
-                    </div>
-                    
-                    <div class="quick-questions">
-                        <span>快捷提问：</span>
-                        <button class="quick-q-btn" data-q="什么是牙周炎？有哪些早期症状？">牙周炎定义</button>
-                        <button class="quick-q-btn" data-q="牙龈出血和牙周炎有什么区别？">牙龈出血</button>
-                        <button class="quick-q-btn" data-q="什么是巴氏刷牙法？">巴氏刷牙法</button>
-                        <button class="quick-q-btn" data-q="牙菌斑和牙结石如何形成？">牙菌斑</button>
-                        <button class="quick-q-btn" data-q="洗牙有必要吗？多久洗一次？">洗牙频率</button>
-                    </div>
-                </div>
-            </section>
+        <!-- 视频中心 -->
+        <section id="video" class="content-panel">
+            <h2>视频中心</h2>
+            <p class="panel-description">专业口腔护理教学视频</p>
 
-            <!-- 科普知识面板 -->
-            <section id="knowledge-base" class="content-panel">
-                <h2><i class="fas fa-book"></i> 牙周健康科普知识库</h2>
-                <p class="panel-description">基于【文档1：文字科普.docx】的专业知识，系统化学习牙周健康知识。</p>
-                
-                <div class="knowledge-sections">
-                    <div class="question-card">
-                        <h3><i class="fas fa-microscope"></i> 基础认知</h3>
-                        <p><strong>牙周炎</strong>是由牙菌斑细菌引发的慢性炎症，破坏牙龈、牙周膜和牙槽骨，是成年人失牙的首要原因。</p>
-                        <p><strong>牙龈出血 vs 牙周炎</strong>：牙龈出血通常是牙龈炎的典型表现，此时炎症仅限于牙龈软组织，通过清洁可完全逆转。若长期忽视，炎症会向深层发展，破坏牙槽骨，这才演变为不可逆的牙周炎。</p>
-                        <p><strong>牙菌斑与牙结石</strong>：牙菌斑是口腔细菌在牙齿表面不断沉积形成的无色黏性生物膜，通常在刷牙后数小时内即可重新生成。若未清除，会矿化成坚硬的牙结石，只能通过专业洁治（洗牙）清除。</p>
-                    </div>
-                    
-                    <div class="question-card">
-                        <h3><i class="fas fa-toothbrush"></i> 口腔卫生行为</h3>
-                        <p><strong>巴氏刷牙法</strong>：将牙刷刷毛与牙龈呈45度角，对准牙齿与牙龈的交界处，以小幅水平震颤的方式轻轻刷动，每次覆盖2-3颗牙。</p>
-                        <p><strong>牙线使用</strong>：将牙线对准牙缝，以轻柔的拉锯式动作滑入牙龈沟底，然后将牙线紧贴一侧牙面，从沟底向咬合面方向提拉刮除菌斑。</p>
-                        <p><strong>冲牙器使用</strong>：利用高压脉冲水流冲走牙缝和牙龈沟内的食物残渣及松散菌斑，适合作为刷牙和牙线的辅助工具。</p>
-                    </div>
-                    
-                    <div class="question-card">
-                        <h3><i class="fas fa-exclamation-triangle"></i> 风险因素与症状</h3>
-                        <p><strong>早期症状</strong>：刷牙或咬硬物时牙龈出血、口腔异味、牙龈边缘红肿。手指沿牙龈边缘轻轻推压，可能挤出少量渗液。</p>
-                        <p><strong>牙龈萎缩牙齿松动原因</strong>：最常见原因是牙周炎--牙菌斑堆积导致牙槽骨持续吸收，失去骨骼包裹的牙龈随之退缩。</p>
-                        <p><strong>口臭与牙周炎关系</strong>：牙周袋内的厌氧菌分解含硫氨基酸，产生挥发性硫化物，直接发出腐败性气味。</p>
-                    </div>
-                    
-                    <div class="question-card">
-                        <h3><i class="fas fa-heart"></i> 心理与口腔健康</h3>
-                        <p><strong>心理对口腔的影响</strong>：焦虑、抑郁、长期精神压力是灼口综合征、复发性阿弗他溃疡、磨牙症等疾病的重要诱因。</p>
-                        <p><strong>口腔对心理的影响</strong>：牙痛、牙龈肿痛、咀嚼不适、口干、口臭等口腔症状，可直接导致焦虑、烦躁、失眠及抑郁情绪。</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 历史记录面板 -->
-            <section id="history" class="content-panel">
-                <h2><i class="fas fa-history"></i> 评估历史记录</h2>
-                <p class="panel-description">查看您之前的风险评估结果和改善建议。</p>
-                <div id="history-list">
-                    <p style="text-align: center; padding: 2rem; color: #666;">暂无历史记录，请先完成一次AI风险评估。</p>
-                </div>
-            </section>
-        </main>
-    </div>
-
-    <!-- 页脚 -->
-    <footer class="main-footer">
-        <p>© 2024 大学生牙周健康AI智能测评系统 | 基于分层融合模型（逻辑回归+随机森林+XGBoost）的真实AI预测，结果仅供参考，不能替代专业医疗诊断。</p>
-    </footer>
-
-    <!-- JavaScript 代码 -->
-    <script>
-        // 引入Font Awesome图标
-        const faLink = document.createElement('link');
-        faLink.rel = 'stylesheet';
-        faLink.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
-        document.head.appendChild(faLink);
-
-        // ====== 全局数据 ======
-        // 基于【文档2：2026医创模型训练.docx】的特征工程
-        const questionnaireData = [
-            {
-                id: 1,
-                field: 'gender',
-                question: "1、您的性别",
-                type: "radio",
-                options: [
-                    { value: "1", text: "男" },
-                    { value: "2", text: "女" }
-                ],
-                mapping: { "男": 1, "女": 2 }
-            },
-            {
-                id: 2,
-                field: 'grade',
-                question: "2、您的年级",
-                type: "radio",
-                options: [
-                    { value: "1", text: "大一" },
-                    { value: "2", text: "大二" },
-                    { value: "3", text: "大三" },
-                    { value: "4", text: "大四" },
-                    { value: "5", text: "大五" },
-                    { value: "6", text: "研究生及以上" }
-                ],
-                mapping: { "大一": 1, "大二": 2, "大三": 3, "大四": 4, "大五": 5, "研究生及以上": 6 }
-            },
-            {
-                id: 3,
-                field: 'major',
-                question: "3、您的专业类别",
-                type: "radio",
-                options: [
-                    { value: "1", text: "医科" },
-                    { value: "2", text: "非医科" }
-                ],
-                mapping: { "医科": 1, "非医科": 2 }
-            },
-            {
-                id: 4,
-                field: 'knowledge',
-                question: "4、您对牙周炎的了解程度",
-                type: "radio",
-                options: [
-                    { value: "0", text: "从未听说" },
-                    { value: "1", text: "听说，但不了解" },
-                    { value: "2", text: "知道基本概念" },
-                    { value: "3", text: "非常了解" }
-                ],
-                mapping: { "从未听说": 0, "听说，但不了解": 1, "知道基本概念": 2, "非常了解": 3 }
-            },
-            {
-                id: 5,
-                field: 'brush_freq',
-                question: "7、您每天刷牙的频率是？",
-                type: "radio",
-                options: [
-                    { value: "0", text: "不刷牙" },
-                    { value: "1", text: "每天1次" },
-                    { value: "2", text: "每天2次（早晚各1次）" },
-                    { value: "3", text: "每天3次及以上（早晚+饭后）" }
-                ],
-                mapping: { "不刷牙": 0, "每天1次": 1, "每天2次（早晚各1次）": 2, "每天3次及以上（早晚+饭后）": 3 }
-            },
-            {
-                id: 6,
-                field: 'brush_duration',
-                question: "8、您每次刷牙的时长约为？",
-                type: "radio",
-                options: [
-                    { value: "0", text: "不足1分钟" },
-                    { value: "1", text: "1-2分钟" },
-                    { value: "2", text: "2-3分钟" },
-                    { value: "3", text: "3分钟以上" }
-                ],
-                mapping: { "不足1分钟": 0, "1-2分钟": 1, "2-3分钟": 2, "3分钟以上": 3 }
-            },
-            {
-                id: 7,
-                field: 'oral_tools',
-                question: "9、您是否使用牙线、冲牙器、牙缝刷等口腔清洁辅助工具？",
-                type: "radio",
-                options: [
-                    { value: "0", text: "从未使用" },
-                    { value: "1", text: "偶尔使用（每周少于3次）" },
-                    { value: "2", text: "经常使用（每周3次及以上）" },
-                    { value: "3", text: "每天使用" }
-                ],
-                mapping: { "从未使用": 0, "偶尔使用（每周少于3次）": 1, "经常使用（每周3次及以上）": 2, "每天使用": 3 }
-            },
-            {
-                id: 8,
-                field: 'wash_freq',
-                question: "10、您定期洗牙的频率是？",
-                type: "radio",
-                options: [
-                    { value: "0", text: "从未洗过牙" },
-                    { value: "1", text: "1年及以上1次" },
-                    { value: "2", text: "6-12个月1次" },
-                    { value: "3", text: "3-6个月1次" }
-                ],
-                mapping: { "从未洗过牙": 0, "1年及以上1次": 1, "6-12个月1次": 2, "3-6个月1次": 3 }
-            },
-            {
-                id: 9,
-                field: 'brush_method',
-                question: "11、您刷牙的方法",
-                type: "radio",
-                options: [
-                    { value: "1", text: "其他" },
-                    { value: "2", text: "横刷" },
-                    { value: "3", text: "巴氏刷牙法" }
-                ],
-                mapping: { "其他": 1, "横刷": 2, "巴氏刷牙法": 3 }
-            },
-            {
-                id: 10,
-                field: 'brush_change',
-                question: "12、牙刷更换频率",
-                type: "radio",
-                options: [
-                    { value: "0", text: ">6个月" },
-                    { value: "1", text: "3~6月" },
-                    { value: "2", text: "1~3月" },
-                    { value: "3", text: "<1个月" }
-                ],
-                mapping: { ">6个月": 0, "3~6月": 1, "1~3月": 2, "<1个月": 3 }
-            },
-            {
-                id: 11,
-                field: 'sugar_intake',
-                question: "14、甜食、含糖饮料摄入频率",
-                type: "radio",
-                options: [
-                    { value: "0", text: "几乎不摄入" },
-                    { value: "1", text: "每月1次及以下" },
-                    { value: "2", text: "每周1-2次" },
-                    { value: "3", text: "每周3-6次" },
-                    { value: "4", text: "每天1次及以上" }
-                ],
-                mapping: { "几乎不摄入": 0, "每月1次及以下": 1, "每周1-2次": 2, "每周3-6次": 3, "每天1次及以上": 4 }
-            },
-            {
-                id: 12,
-                field: 'smoking',
-                question: "15、是否吸烟",
-                type: "radio",
-                options: [
-                    { value: "1", text: "从不" },
-                    { value: "2", text: "偶尔" },
-                    { value: "3", text: "经常" }
-                ],
-                mapping: { "从不": 1, "偶尔": 2, "经常": 3 }
-            },
-            {
-                id: 13,
-                field: 'drinking',
-                question: "15、是否饮酒",
-                type: "radio",
-                options: [
-                    { value: "1", text: "从不" },
-                    { value: "2", text: "偶尔" },
-                    { value: "3", text: "经常" }
-                ],
-                mapping: { "从不": 1, "偶尔": 2, "经常": 3 }
-            },
-            {
-                id: 14,
-                field: 'sleep',
-                question: "17、平均每晚睡眠时长",
-                type: "radio",
-                options: [
-                    { value: "0", text: "<5小时" },
-                    { value: "1", text: "5~6小时" },
-                    { value: "2", text: "6~7小时" },
-                    { value: "3", text: "7~8小时" },
-                    { value: "4", text: ">8小时" }
-                ],
-                mapping: { "<5小时": 0, "5~6小时": 1, "6~7小时": 2, "7~8小时": 3, ">8小时": 4 }
-            },
-            {
-                id: 15,
-                field: 'exercise',
-                question: "18、每周体育锻炼频率",
-                type: "radio",
-                options: [
-                    { value: "0", text: "从不" },
-                    { value: "1", text: "<1次" },
-                    { value: "2", text: "1~2次/周" },
-                    { value: "3", text: "3~4次/周" },
-                    { value: "4", text: "每天" }
-                ],
-                mapping: { "从不": 0, "<1次": 1, "1~2次/周": 2, "3~4次/周": 3, "每天": 4 }
-            },
-            {
-                id: 16,
-                field: 'stress',
-                question: "19、压力感",
-                type: "radio",
-                options: [
-                    { value: "0", text: "从不" },
-                    { value: "1", text: "偶尔" },
-                    { value: "2", text: "经常" }
-                ],
-                mapping: { "从不": 0, "偶尔": 1, "经常": 2 }
-            },
-            {
-                id: 17,
-                field: 'anxiety',
-                question: "19、考试焦虑",
-                type: "radio",
-                options: [
-                    { value: "0", text: "从不" },
-                    { value: "1", text: "偶尔" },
-                    { value: "2", text: "经常" }
-                ],
-                mapping: { "从不": 0, "偶尔": 1, "经常": 2 }
-            },
-            {
-                id: 18,
-                field: 'stress_sleep',
-                question: "19、压力影响作息",
-                type: "radio",
-                options: [
-                    { value: "0", text: "从不" },
-                    { value: "1", text: "偶尔" },
-                    { value: "2", text: "经常" }
-                ],
-                mapping: { "从不": 0, "偶尔": 1, "经常": 2 }
-            },
-            {
-                id: 19,
-                field: 'stress_life',
-                question: "19、压力影响生活",
-                type: "radio",
-                options: [
-                    { value: "0", text: "从不" },
-                    { value: "1", text: "偶尔" },
-                    { value: "2", text: "经常" }
-                ],
-                mapping: { "从不": 0, "偶尔": 1, "经常": 2 }
-            },
-            {
-                id: 20,
-                field: 'stress_oral',
-                question: "19、压力大时忽视口腔卫生",
-                type: "radio",
-                options: [
-                    { value: "0", text: "从不" },
-                    { value: "1", text: "偶尔" },
-                    { value: "2", text: "经常" }
-                ],
-                mapping: { "从不": 0, "偶尔": 1, "经常": 2 }
-            },
-            {
-                id: 21,
-                field: 'family_history',
-                question: "21、直系亲属是否有牙周病史",
-                type: "radio",
-                options: [
-                    { value: "0", text: "无" },
-                    { value: "1", text: "有（1人及以上）" }
-                ],
-                mapping: { "无": 0, "有（1人及以上）": 1 }
-            },
-            {
-                id: 22,
-                field: 'oral_injury',
-                question: "22、是否有口腔外伤史",
-                type: "radio",
-                options: [
-                    { value: "0", text: "无" },
-                    { value: "1", text: "有（1次）" },
-                    { value: "2", text: "有（多次）" }
-                ],
-                mapping: { "无": 0, "有（1次）": 1, "有（多次）": 2 }
-            },
-            {
-                id: 23,
-                field: 'bad_habits',
-                question: "20、口腔不良习惯数量（选填）",
-                type: "number",
-                min: 0,
-                max: 10,
-                placeholder: "输入0-10之间的数字"
-            }
-        ];
-
-        // 视频数据
-        const videoData = [
-            {
-                id: 1,
-                title: "专业牙医现场演示巴氏刷牙法标准操作",
-                description: "掌握正确的刷牙方法是预防牙周炎的第一步。视频将详细展示如何将刷毛与牙龈呈45度角，以小幅水平震颤的方式清洁牙龈沟。",
-                thumbnail: "https://images.unsplash.com/photo-1606811971618-4486d14f1585?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
-                link: "https://www.bilibili.com/video/BV1qJ411D7z4/",
-                duration: "3:45"
-            },
-            {
-                id: 2,
-                title: "牙线使用教学：正确清洁牙缝防止邻面龋",
-                description: "学习如何将牙线以拉锯式动作滑入牙龈沟底，紧贴牙面刮除菌斑。每清洁一个牙缝后应清洁牙线，避免交叉感染。",
-                thumbnail: "https://images.unsplash.com/photo-1588776814546-daab30f310ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
-                link: "https://www.bilibili.com/video/BV1NJ411D7z4/",
-                duration: "4:20"
-            },
-            {
-                id: 3,
-                title: "冲牙器使用指南：高压水流清洁辅助工具",
-                description: "冲牙器利用高压脉冲水流冲走牙缝和牙龈沟内的食物残渣。适合作为刷牙和牙线的辅助工具，但不能替代传统牙线。",
-                thumbnail: "https://images.unsplash.com/photo-1559591936-2c6cbe7c4b8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
-                link: "https://www.bilibili.com/video/BV1NJ411D7z5/",
-                duration: "5:10"
-            },
-            {
-                id: 4,
-                title: "牙周炎早期症状识别与自我检查方法",
-                description: "了解牙周炎早期症状：刷牙出血、口腔异味、牙龈红肿。学习用手指沿牙龈边缘轻推检查是否有渗液，早期发现是关键。",
-                thumbnail: "https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
-                link: "https://www.bilibili.com/video/BV1NJ411D7z6/",
-                duration: "6:15"
-            },
-            {
-                id: 5,
-                title: "洗牙全过程解析：超声波洁治与抛光",
-                description: "了解洗牙的两个步骤：超声波震碎牙石和菌斑，手动器械精细刮治，最后抛光减少菌斑附着。每年1-2次洗牙是预防基础。",
-                thumbnail: "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
-                link: "https://www.bilibili.com/video/BV1NJ411D7z7/",
-                duration: "8:30"
-            },
-            {
-                id: 6,
-                title: "大学生口腔健康7天改善计划",
-                description: "专为大学生设计的7天口腔护理计划：从学习巴氏刷牙法到使用牙线，建立完整的口腔护理流程，预防胜于治疗。",
-                thumbnail: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
-                link: "https://www.bilibili.com/video/BV1NJ411D7z8/",
-                duration: "12:45"
-            },
-            {
-                id: 7,
-                title: "如何选择适合自己的牙刷和牙膏",
-                description: "专业牙医教你根据牙龈状况、牙齿敏感度选择合适的牙刷硬度、刷头大小，以及不同功效的牙膏。",
-                thumbnail: "https://images.unsplash.com/photo-1622484202070-707d6d816b5a?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
-                link: "https://www.bilibili.com/video/BV1NJ411D7z9/",
-                duration: "7:20"
-            },
-            {
-                id: 8,
-                title: "口腔溃疡与牙周炎的防治区别",
-                description: "讲解口腔溃疡与牙周炎的区别，如何辨别和治疗，以及预防复发的方法。",
-                thumbnail: "https://images.unsplash.com/photo-1556228578-9c360e1d8d6f?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
-                link: "https://www.bilibili.com/video/BV1NJ411D7z0/",
-                duration: "9:15"
-            }
-        ];
-
-        // 基于【文档1：文字科普.docx】的知识库
-        const knowledgeBase = {
-            "牙周炎": "牙周炎是由牙菌斑细菌引发的慢性炎症，破坏牙龈、牙周膜和牙槽骨，是成年人失牙的首要原因。它通常始于可逆的牙龈炎(红肿、出血)，若未干预，则发展为不可逆的牙周炎，出现牙周袋和牙槽骨吸收。",
-            "牙龈出血": "牙龈出血通常是牙龈炎的典型表现，此时炎症仅限于牙龈软组织，通过清洁可完全逆转。若长期忽视，炎症会向深层发展，破坏牙槽骨，这才演变为不可逆的牙周炎。简单来说:能止住的出血多是牙龈炎，伴随牙齿松动或牙龈萎缩的出血，往往已是牙周炎。",
-            "牙菌斑": "牙菌斑是口腔细菌在牙齿表面不断沉积形成的无色黏性生物膜，通常在刷牙后数小时内即可重新生成。若牙菌斑未被及时清除，其中的矿物质(主要是唾液中的钙、磷)会逐渐沉积、矿化，在24至72小时内开始形成坚硬的牙结石。牙结石一旦形成，无法通过刷牙去除，只能通过专业洁治(洗牙)清除。",
-            "巴氏刷牙法": "巴氏刷牙法的核心是将牙刷刷毛与牙龈呈45度角，对准牙齿与牙龈的交界处，以小幅水平震颤的方式轻轻刷动，每次覆盖2-3颗牙。这种震颤动作主要用于清除牙龈沟内的牙菌斑，而非大幅拉锯式横刷，以避免损伤牙龈和牙齿颈部。",
-            "牙线使用": "持牙线棒柄部，将牙线对准牙缝，以轻柔的拉锯式动作滑入牙龈沟底，然后将牙线紧贴一侧牙面，从沟底向咬合面方向提拉刮除菌斑。每清洁一个牙缝后，用纸巾擦净或冲洗牙线棒，避免将菌斑带入下一个牙缝。",
-            "洗牙": "洗牙的专业名称是'洁治'，主要分为两个步骤:先用超声波洁治器震碎并去除牙石和菌斑，再用手用器械进行精细刮治，最后进行抛光以减少菌斑再次附着。定期洗牙(每年1-2次)是预防和治疗牙周炎的基础措施。",
-            "早期症状": "牙周炎早期症状通常不明显且无痛，主要表现为刷牙或咬硬物时牙龈出血、口腔异味，以及牙龈边缘红肿。此时用手指沿牙龈边缘轻轻推压，可能挤出少量渗液。若出现牙龈与牙齿分离形成'假性牙周袋'，或单颗牙咀嚼无力，提示已从牙龈炎进展为早期牙周炎。",
-            "口臭": "牙周炎是导致口臭的常见器质性原因之一。牙周袋内的厌氧菌分解含硫氨基酸，产生挥发性硫化物(如硫化氢、甲硫醇)，直接发出腐败性气味。这种口臭无法通过刷牙、漱口水或嚼口香糖根除，只有通过牙周治疗清除菌斑和牙石后才能有效控制。",
-            "心理影响": "焦虑、抑郁、长期精神压力是灼口综合征、复发性阿弗他溃疡、磨牙症等疾病的重要诱因。不良心理状态可抑制免疫功能，使牙周炎、口腔感染更易发生且难以控制。同时，心理障碍者常忽视口腔卫生维护，增加龋病、牙周病的发病风险。"
-        };
-
-        // ====== 全局变量 ======
-        let currentQuestionIndex = 0;
-        let userAnswers = {};
-        let chatHistory = [];
-
-        // ====== DOM元素 ======
-        const questionnaireContainer = document.getElementById('questionnaire-container');
-        const prevBtn = document.getElementById('prev-btn');
-        const nextBtn = document.getElementById('next-btn');
-        const submitBtn = document.getElementById('submit-btn');
-        const questionProgress = document.getElementById('question-progress');
-        const resultContainer = document.getElementById('result-container');
-        const navLinks = document.querySelectorAll('.nav-menu a');
-        const panels = document.querySelectorAll('.content-panel');
-        const videoGrid = document.getElementById('video-grid');
-        const chatMessages = document.getElementById('chat-messages');
-        const userInput = document.getElementById('user-input');
-        const sendBtn = document.getElementById('send-btn');
-        const quickQButtons = document.querySelectorAll('.quick-q-btn');
-        const retakeBtn = document.getElementById('retake-btn');
-
-        // ====== 初始化函数 ======
-        function init() {
-            loadQuestionnaire();
-            loadVideos();
-            setupEventListeners();
-            updateNavigation();
-        }
-
-        // ====== 问卷功能 ======
-        function loadQuestionnaire() {
-            if (questionnaireData.length === 0) {
-                questionnaireContainer.innerHTML = '<p>问卷数据加载中...</p>';
-                return;
-            }
-            
-            showQuestion(currentQuestionIndex);
-            updateProgress();
-        }
-
-        function showQuestion(index) {
-            if (index < 0 || index >= questionnaireData.length) return;
-            
-            const question = questionnaireData[index];
-            let inputHtml = '';
-            
-            if (question.type === 'radio') {
-                question.options.forEach(option => {
-                    const isChecked = userAnswers[question.field] === option.value;
-                    inputHtml += `
-                        <label>
-                            <input type="radio" name="${question.field}" value="${option.value}" ${isChecked ? 'checked' : ''}>
-                            ${option.text}
-                        </label>
-                    `;
-                });
-            } else if (question.type === 'number') {
-                const value = userAnswers[question.field] || '';
-                inputHtml = `
-                    <input type="number" id="${question.field}" 
-                           min="${question.min || 0}" 
-                           max="${question.max || 10}" 
-                           value="${value}"
-                           placeholder="${question.placeholder}"
-                           style="width: 200px; padding: 0.8rem; border: 1px solid #ddd; border-radius: var(--border-radius);">
-                `;
-            }
-            
-            questionnaireContainer.innerHTML = `
-                <div class="question-card" data-question-id="${question.id}">
-                    <h3>${question.id}. ${question.question}</h3>
-                    <div class="options">${inputHtml}</div>
-                </div>
-            `;
-            
-            // 添加事件监听
-            if (question.type === 'radio') {
-                const inputs = questionnaireContainer.querySelectorAll('input[type="radio"]');
-                inputs.forEach(input => {
-                    input.addEventListener('change', saveAnswer);
-                });
-            } else if (question.type === 'number') {
-                const input = document.getElementById(question.field);
-                input.addEventListener('input', saveAnswer);
-            }
-            
-            // 更新按钮状态
-            prevBtn.style.display = index === 0 ? 'none' : 'inline-flex';
-            nextBtn.style.display = index === questionnaireData.length - 1 ? 'none' : 'inline-flex';
-            submitBtn.style.display = index === questionnaireData.length - 1 ? 'inline-flex' : 'none';
-        }
-
-        function saveAnswer() {
-            const question = questionnaireData[currentQuestionIndex];
-            
-            if (question.type === 'radio') {
-                const selected = questionnaireContainer.querySelector(`input[name="${question.field}"]:checked`);
-                if (selected) {
-                    userAnswers[question.field] = selected.value;
-                }
-            } else if (question.type === 'number') {
-                const input = document.getElementById(question.field);
-                userAnswers[question.field] = parseInt(input.value) || 0;
-            }
-        }
-
-        function updateProgress() {
-            questionProgress.textContent = `${currentQuestionIndex + 1}/${questionnaireData.length}`;
-        }
-
-        // ====== 视频中心功能 ======
-        function loadVideos() {
-            if (videoData.length === 0) {
-                videoGrid.innerHTML = '<p>视频数据加载中...</p>';
-                return;
-            }
-            
-            videoGrid.innerHTML = videoData.map(video => `
+            <div class="video-grid">
                 <div class="video-card">
                     <div class="video-thumbnail">
-                        <img src="${video.thumbnail}" alt="${video.title}" onerror="this.src='https://images.unsplash.com/photo-1559591936-2c6cbe7c4b8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80'">
-                        <div class="play-icon"><i class="fas fa-play"></i></div>
-                        <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 2px 6px; border-radius: 3px; font-size: 0.8rem;">
-                            ${video.duration}
-                        </div>
+                        <img src="https://via.placeholder.com/300x160">
+                        <div class="play-icon">▶</div>
                     </div>
                     <div class="video-info">
-                        <h4>${video.title}</h4>
-                        <p>${video.description}</p>
-                        <a href="${video.link}" class="btn-watch" target="_blank" rel="noopener noreferrer">
-                            <i class="fas fa-play-circle"></i> 立即观看
-                        </a>
+                        <h4>巴氏刷牙法教学</h4>
+                        <p>专业牙医演示正确刷牙方式</p>
                     </div>
                 </div>
-            `).join('');
-        }
 
-        // ====== AI风险评估功能 ======
-        function runAIAssessment() {
-            saveAnswer();
-            
-            // 检查是否所有问题都已回答
-            const requiredQuestions = questionnaireData.filter(q => q.type !== 'number');
-            const unanswered = requiredQuestions.filter(q => !userAnswers[q.field]);
-            
-            if (unanswered.length > 0) {
-                alert(`请先完成以下问题：${unanswered.map(q => q.id).join(', ')}`);
-                currentQuestionIndex = unanswered[0].id - 1;
-                showQuestion(currentQuestionIndex);
-                updateProgress();
-                return;
-            }
-            
-            // 显示加载状态
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> AI分析中...';
-            submitBtn.disabled = true;
-            
-            // 模拟AI模型预测（基于您提供的模型特征工程）
-            setTimeout(() => {
-                const result = simulateAIPrediction(userAnswers);
-                displayResult(result);
-                
-                // 重置按钮
-                submitBtn.innerHTML = '<i class="fas fa-brain"></i> AI智能评估';
-                submitBtn.disabled = false;
-            }, 2000);
-        }
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://via.placeholder.com/300x160">
+                        <div class="play-icon">▶</div>
+                    </div>
+                    <div class="video-info">
+                        <h4>牙线正确使用方法</h4>
+                        <p>有效预防邻面龋</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        // 基于【文档2】的AI模型模拟预测
-        function simulateAIPrediction(data) {
-            // 转换数据为数值
-            const features = {};
-            
-            // 基础特征转换
-            features.gender = parseInt(data.gender) || 1;
-            features.grade = parseInt(data.grade) || 1;
-            features.major = parseInt(data.major) || 2;
-            features.knowledge = parseInt(data.knowledge) || 1;
-            features.brush_freq = parseInt(data.brush_freq) || 2;
-            features.brush_duration = parseInt(data.brush_duration) || 1;
-            features.oral_tools = parseInt(data.oral_tools) || 0;
-            features.wash_freq = parseInt(data.wash_freq) || 0;
-            features.brush_method = parseInt(data.brush_method) || 1;
-            features.brush_change = parseInt(data.brush_change) || 1;
-            features.sugar_intake = parseInt(data.sugar_intake) || 2;
-            features.smoking = parseInt(data.smoking) || 1;
-            features.drinking = parseInt(data.drinking) || 1;
-            features.sleep = parseInt(data.sleep) || 3;
-            features.exercise = parseInt(data.exercise) || 2;
-            features.stress = parseInt(data.stress) || 1;
-            features.anxiety = parseInt(data.anxiety) || 1;
-            features.stress_sleep = parseInt(data.stress_sleep) || 1;
-            features.stress_life = parseInt(data.stress_life) || 1;
-            features.stress_oral = parseInt(data.stress_oral) || 1;
-            features.family_history = parseInt(data.family_history) || 0;
-            features.oral_injury = parseInt(data.oral_injury) || 0;
-            features.bad_habits = parseInt(data.bad_habits) || 0;
-            
-            // 计算创新特征（基于文档2的特征工程）
-            const campusCleaning = (features.brush_freq * features.brush_duration) + features.oral_tools + features.wash_freq;
-            const campusLifeRisk = features.sugar_intake + (features.smoking >= 2 ? 1 : 0) + (features.drinking >= 2 ? 1 : 0) + (4 - features.sleep);
-            const academicStress = (features.stress + features.anxiety + features.stress_sleep + features.stress_life + features.stress_oral) / 5;
-            const oralCompliance = (features.brush_method === 3 ? 1 : 0) + features.brush_change + features.wash_freq;
-            const healthyBehavior = features.exercise - ((features.smoking >= 2 ? 1 : 0) + (features.drinking >= 2 ? 1 : 0));
-            const geneticBehaviorRisk = features.family_history * oralCompliance;
-            const stressOralNeglect = academicStress * features.stress_oral;
-            const injuryBadHabitRisk = (features.oral_injury > 0 ? 1 : 0) * features.bad_habits;
-            
-            // 计算风险分数
-            let riskScore = 0;
-            
-            // 口腔卫生相关
-            if (features.brush_freq <= 1) riskScore += 15;
-            if (features.brush_duration <= 1) riskScore += 10;
-            if (features.oral_tools === 0) riskScore += 10;
-            if (features.wash_freq === 0) riskScore += 15;
-            if (features.brush_method !== 3) riskScore += 10;
-            if (features.brush_change <= 1) riskScore += 5;
-            
-            // 生活习惯相关
-            if (features.sugar_intake >= 3) riskScore += 10;
-            if (features.smoking >= 2) riskScore += 15;
-            if (features.drinking >= 2) riskScore += 10;
-            if (features.sleep <= 2) riskScore += 10;
-            if (features.exercise <= 1) riskScore += 5;
-            
-            // 心理压力相关
-            if (features.stress >= 2) riskScore += 8;
-            if (features.anxiety >= 2) riskScore += 8;
-            if (features.stress_oral >= 2) riskScore += 12;
-            
-            // 遗传与外伤
-            if (features.family_history === 1) riskScore += 8;
-            if (features.oral_injury >= 1) riskScore += 5;
-            if (features.bad_habits >= 3) riskScore += 8;
-            
-            // 创新特征加权
-            riskScore += campusLifeRisk * 0.3;
-            riskScore += stressOralNeglect * 0.2;
-            riskScore += injuryBadHabitRisk * 0.1;
-            
-            // 归一化到0-100
-            riskScore = Math.max(0, Math.min(100, riskScore));
-            
-            // 确定风险等级
-            let riskLevel, riskColor, riskDescription;
-            if (riskScore < 30) {
-                riskLevel = "低风险";
-                riskColor = "risk-low";
-                riskDescription = "您的口腔卫生习惯良好，继续保持！";
-            } else if (riskScore < 60) {
-                riskLevel = "中风险";
-                riskColor = "risk-medium";
-                riskDescription = "存在一定风险因素，建议改善口腔卫生习惯";
-            } else {
-                riskLevel = "高风险";
-                riskColor = "risk-high";
-                riskDescription = "存在多个高风险因素，建议尽快采取改善措施";
-            }
-            
-            // 识别关键风险因素
-            const riskFactors = [];
-            
-            if (features.brush_freq <= 1) {
-                riskFactors.push({ name: "刷牙频率低", impact: "高", description: "每天刷牙少于2次，牙菌斑易堆积" });
-            }
-            
-            if (features.wash_freq === 0) {
-                riskFactors.push({ name: "从未洗牙", impact: "高", description: "牙结石无法自行清除，增加炎症风险" });
-            }
-            
-            if (features.smoking >= 2) {
-                riskFactors.push({ name: "吸烟", impact: "高", description: "降低牙龈血液循环，加重炎症" });
-            }
-            
-            if (features.stress_oral >= 2) {
-                riskFactors.push({ name: "压力忽视口腔卫生", impact: "中", description: "压力大时忽视刷牙，菌斑堆积" });
-            }
-            
-            if (features.sugar_intake >= 3) {
-                riskFactors.push({ name: "高糖饮食", impact: "中", description: "促进牙菌斑形成，增加龋齿风险" });
-            }
-            
-            if (features.oral_tools === 0) {
-                riskFactors.push({ name: "未使用辅助工具", impact: "中", description: "牙缝清洁不足，易发邻面龋" });
-            }
-            
-            if (features.family_history === 1) {
-                riskFactors.push({ name: "家族史", impact: "中", description: "遗传因素增加患病风险" });
-            }
-            
-            // 生成个性化建议
-            const advice = [];
-            
-            if (features.brush_freq <= 1) {
-                advice.push("增加刷牙频率至每天2次，早晚各一次");
-            }
-            
-            if (features.wash_freq === 0) {
-                advice.push("安排一次专业洗牙，清除牙结石");
-            }
-            
-            if (features.brush_method !== 3) {
-                advice.push("学习并使用巴氏刷牙法，更有效清洁牙龈沟");
-            }
-            
-            if (features.oral_tools === 0) {
-                advice.push("开始使用牙线，每天清洁牙缝一次");
-            }
-            
-            if (features.sugar_intake >= 3) {
-                advice.push("减少含糖饮料和零食摄入，特别是睡前");
-            }
-            
-            if (features.stress_oral >= 2) {
-                advice.push("建立规律的口腔卫生习惯，即使压力大也要坚持刷牙");
-            }
-            
-            if (riskFactors.length === 0) {
-                advice.push("继续保持良好的口腔卫生习惯，定期口腔检查");
-            }
-            
-            return {
-                score: riskScore,
-                level: riskLevel,
-                color: riskColor,
-                description: riskDescription,
-                factors: riskFactors,
-                advice: advice,
-                probability: (riskScore / 100).toFixed(3)
-            };
-        }
+        <!-- 智能咨询 -->
+        <section id="ai" class="content-panel">
+            <h2>AI智能咨询</h2>
+            <p class="panel-description">基于专业牙周医学知识库</p>
 
-        function displayResult(result) {
-            // 显示结果容器
-            resultContainer.style.display = 'block';
-            
-            // 更新风险条
-            const riskFill = document.getElementById('risk-fill');
-            riskFill.style.width = `${result.score}%`;
-            
-            // 更新风险等级
-            const riskLevel = document.querySelector('.risk-level');
-            riskLevel.textContent = `风险等级：${result.level}`;
-            riskLevel.className = `risk-level ${result.color}`;
-            
-            // 更新风险分数
-            document.getElementById('risk-score').textContent = 
-                `风险概率：${(result.score).toFixed(1)}% | 高风险概率：${(result.probability * 100).toFixed(1)}%`;
-            
-            // 显示风险因素
-            const factorsList = document.getElementById('factors-list');
-            if (result.factors.length > 0) {
-                let factorsHtml = '<h4><i class="fas fa-exclamation-circle"></i> 主要风险因素</h4>';
-                result.factors.forEach(factor => {
-                    factorsHtml += `
-                        <div class="factor-item">
-                            <div class="factor-name">${factor.name}</div>
-                            <div class="factor-impact impact-${factor.impact.toLowerCase()}">${factor.impact}风险</div>
-                        </div>
-                        <div style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">${factor.description}</div>
-                    `;
-                });
-                factorsList.innerHTML = factorsHtml;
-            } else {
-                factorsList.innerHTML = '<p>未发现明显风险因素，继续保持良好习惯！</p>';
-            }
-            
-            // 显示AI建议
-            const aiAdvice = document.getElementById('ai-advice');
-            let adviceHtml = '';
-            result.advice.forEach((item, index) => {
-                adviceHtml += `<p>${index + 1}. ${item}</p>`;
-            });
-            aiAdvice.innerHTML = adviceHtml;
-            
-            // 滚动到结果区域
-            resultContainer.scrollIntoView({ behavior: 'smooth' });
-            
-            // 保存到历史记录
-            saveToHistory(result);
-        }
+            <div class="chat-container">
+                <div class="chat-messages">
+                    <div class="message">
+                        <div class="avatar">🤖</div>
+                        <div class="bubble">您好，我是您的牙周健康AI助手，请问有什么可以帮您？</div>
+                    </div>
+                </div>
 
-        function saveToHistory(result) {
-            const historyItem = {
-                date: new Date().toLocaleString('zh-CN'),
-                score: result.score,
-                level: result.level,
-                factors: result.factors.length
-            };
-            
-            // 这里可以保存到localStorage或发送到服务器
-            console.log('评估结果保存：', historyItem);
-        }
+                <div class="chat-input-area">
+                    <input type="text" placeholder="请输入您的问题">
+                    <button class="btn btn-primary">发送</button>
+                </div>
+            </div>
+        </section>
 
-        // ====== AI聊天功能 ======
-        function addChatMessage(text, isUser = false) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
-            
-            messageDiv.innerHTML = `
-                <div class="avatar">${isUser ? '👤' : '🤖'}</div>
-                <div class="bubble">${text}</div>
-            `;
-            
-            chatMessages.appendChild(messageDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-            
-            if (!isUser) {
-                chatHistory.push({ role: 'assistant', content: text });
-            } else {
-                chatHistory.push({ role: 'user', content: text });
-            }
-        }
+        <!-- 科普知识 -->
+        <section id="knowledge" class="content-panel">
+            <h2>科普知识</h2>
 
-        function getAIResponse(userQuestion) {
-            // 简单的关键词匹配
-            const lowerQuestion = userQuestion.toLowerCase();
-            let response = "我理解您的问题。基于牙周医学知识：";
-            
-            // 检查知识库
-            for (const [key, value] of Object.entries(knowledgeBase)) {
-                if (lowerQuestion.includes(key.toLowerCase())) {
-                    response = value;
-                    break;
-                }
-            }
-            
-            // 通用回答
-            if (response === "我理解您的问题。基于牙周医学知识：") {
-                response = `关于"${userQuestion}"，我建议您：
-1. 坚持每天使用巴氏刷牙法刷牙至少2分钟
-2. 每晚使用牙线清洁所有牙缝
-3. 定期（每6-12个月）进行口腔检查和洗牙
-4. 减少高糖饮食，保持均衡营养
-5. 如有持续症状，请及时就诊专业牙医`;
-            }
-            
-            // 模拟打字效果
-            setTimeout(() => {
-                addChatMessage(response, false);
-            }, 500);
-        }
+            <div class="knowledge-sections">
+                <div class="question-card">
+                    <h3>什么是牙周炎？</h3>
+                    <p>牙周炎是由牙菌斑引起的慢性炎症，会破坏牙龈和牙槽骨，是成年人失牙的主要原因。</p>
+                </div>
 
-        // ====== 事件监听器设置 ======
-        function setupEventListeners() {
-            // 导航切换
-            navLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const targetId = link.getAttribute('href').substring(1);
-                    
-                    // 更新导航激活状态
-                    navLinks.forEach(l => l.parentElement.classList.remove('active'));
-                    link.parentElement.classList.add('active');
-                    
-                    // 显示对应面板
-                    panels.forEach(panel => {
-                        panel.classList.remove('active');
-                        if (panel.id === targetId) {
-                            panel.classList.add('active');
-                        }
-                    });
-                });
-            });
+                <div class="question-card">
+                    <h3>巴氏刷牙法</h3>
+                    <p>将刷毛与牙龈呈45°角，小幅水平震颤，有效清除牙龈沟内菌斑。</p>
+                </div>
+            </div>
+        </section>
 
-            // 问卷导航
-            prevBtn.addEventListener('click', () => {
-                if (currentQuestionIndex > 0) {
-                    saveAnswer();
-                    currentQuestionIndex--;
-                    showQuestion(currentQuestionIndex);
-                    updateProgress();
-                }
-            });
+    </main>
+</div>
 
-            nextBtn.addEventListener('click', () => {
-                if (currentQuestionIndex < questionnaireData.length - 1) {
-                    saveAnswer();
-                    currentQuestionIndex++;
-                    showQuestion(currentQuestionIndex);
-                    updateProgress();
-                }
-            });
+<footer class="main-footer">
+    © 2026 大学生牙周健康AI测评系统
+</footer>
 
-            submitBtn.addEventListener('click', runAIAssessment);
+<script>
+    const links = document.querySelectorAll('.nav-menu a');
+    const panels = document.querySelectorAll('.content-panel');
 
-            // 重新评估
-            retakeBtn.addEventListener('click', () => {
-                resultContainer.style.display = 'none';
-                currentQuestionIndex = 0;
-                userAnswers = {};
-                loadQuestionnaire();
-            });
+    links.forEach(link => {
+        link.addEventListener('click', e => {
+            e.preventDefault();
+            const target = link.getAttribute('href').substring(1);
 
-            // AI聊天
-            sendBtn.addEventListener('click', sendMessage);
-            userInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    sendMessage();
-                }
-            });
+            links.forEach(l => l.parentElement.classList.remove('active'));
+            link.parentElement.classList.add('active');
 
-            // 快捷问题
-            quickQButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const question = button.getAttribute('data-q');
-                    userInput.value = question;
-                    sendMessage();
-                });
-            });
-        }
+            panels.forEach(p => p.classList.remove('active'));
+            document.getElementById(target).classList.add('active');
+        });
+    });
+</script>
 
-        function sendMessage() {
-            const question = userInput.value.trim();
-            if (!question) return;
-            
-            // 添加用户消息
-            addChatMessage(question, true);
-            userInput.value = '';
-            
-            // 获取AI回复
-            getAIResponse(question);
-        }
-
-        function updateNavigation() {
-            // 初始激活第一个导航项
-            navLinks[0].parentElement.classList.add('active');
-            panels[0].classList.add('active');
-        }
-
-        // ====== 启动应用 ======
-        document.addEventListener('DOMContentLoaded', init);
-    </script>
 </body>
 </html>
