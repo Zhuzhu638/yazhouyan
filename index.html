@@ -653,7 +653,7 @@
             <!-- AI风险评估面板 -->
             <section id="risk-assessment" class="content-panel active">
                 <h2><i class="fas fa-poll-h"></i> AI牙周炎风险评估</h2>
-                <p class="panel-description">基于分层融合模型（逻辑回归+随机森林+XGBoost）的真实AI预测，使用【文档3】的300+条数据训练，科学评估牙周炎风险。</p>
+                <p class="panel-description">基于分层融合模型（逻辑回归+随机森林+XGBoost）的真实AI预测，科学评估牙周炎风险。</p>
                 
                 <div id="questionnaire-container">
                     <!-- 问卷将动态加载 -->
@@ -704,7 +704,7 @@
             <!-- 视频中心面板 -->
             <section id="video-center" class="content-panel">
                 <h2><i class="fas fa-video"></i> 口腔健康视频中心</h2>
-                <p class="panel-description">专业口腔护理教学视频，结合【文档1】的科普知识，助您科学守护口腔健康。</p>
+                <p class="panel-description">专业口腔护理教学视频，助您科学守护口腔健康。</p>
                 
                 <div class="video-grid" id="video-grid">
                     <!-- 视频将通过JavaScript动态加载 -->
@@ -714,7 +714,7 @@
             <!-- 智能咨询面板 -->
             <section id="ai-consult" class="content-panel">
                 <h2><i class="fas fa-robot"></i> 牙周健康AI助手</h2>
-                <p class="panel-description">基于【文档1：文字科普.docx】的专业知识库，24小时在线解答您关于牙周健康的疑问。</p>
+                <p class="panel-description">基于专业的牙周医学知识库，24小时在线解答您关于牙周健康的疑问。</p>
                 
                 <div class="chat-container">
                     <div class="chat-messages" id="chat-messages">
@@ -743,9 +743,55 @@
             <!-- 科普知识面板 -->
             <section id="knowledge-base" class="content-panel">
                 <h2><i class="fas fa-book"></i> 牙周健康科普知识库</h2>
-                <p class="panel-description">基于【文档1：文字科普.docx】的专业知识，系统化学习牙周健康知识。包含6个核心板块，18个知识点。</p>
+                <p class="panel-description">系统化学习牙周健康知识。包含6个核心板块，18个知识点。</p>
                 
-                <!-- 科普内容保持不变 -->
+                <div class="knowledge-container">
+                    <!-- 板块1：疾病认知 -->
+                    <div class="knowledge-section">
+                        <h3><i class="fas fa-disease"></i> 牙周疾病基础认知</h3>
+                        <div class="knowledge-points">
+                            <div class="knowledge-point">
+                                <h4><i class="fas fa-info-circle"></i> 什么是牙周炎？</h4>
+                                <p>牙周炎是由牙菌斑细菌引发的慢性炎症，破坏牙龈、牙周膜和牙槽骨，是成年人失牙的首要原因。它通常始于可逆的牙龈炎（红肿、出血），若未干预，则发展为不可逆的牙周炎，出现牙周袋和牙槽骨吸收。</p>
+                            </div>
+                            <div class="knowledge-point">
+                                <h4><i class="fas fa-exclamation-triangle"></i> 牙龈出血 vs 牙周炎</h4>
+                                <p><strong>牙龈出血</strong>通常是牙龈炎的典型表现，此时炎症仅限于牙龈软组织，通过清洁可完全逆转。<br>
+                                <strong>牙周炎</strong>是炎症向深层发展，破坏牙槽骨，这已演变为不可逆的损伤。简单来说：能止住的出血多是牙龈炎，伴随牙齿松动或牙龈萎缩的出血，往往已是牙周炎。</p>
+                            </div>
+                            <div class="knowledge-point">
+                                <h4><i class="fas fa-bacterium"></i> 牙菌斑与牙结石形成</h4>
+                                <p><strong>牙菌斑</strong>是口腔细菌在牙齿表面不断沉积形成的无色黏性生物膜，通常在刷牙后数小时内即可重新生成。<br>
+                                <strong>牙结石</strong>是未清除的牙菌斑矿化成坚硬的沉积物，只能通过专业洁治（洗牙）清除。形成时间：24-72小时开始矿化。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 板块2：口腔卫生行为 -->
+                    <div class="knowledge-section">
+                        <h3><i class="fas fa-toothbrush"></i> 口腔卫生正确行为</h3>
+                        <div class="knowledge-points">
+                            <div class="knowledge-point">
+                                <h4><i class="fas fa-hand-sparkles"></i> 巴氏刷牙法（标准操作）</h4>
+                                <p><strong>核心要点</strong>：将牙刷刷毛与牙龈呈45度角，对准牙齿与牙龈的交界处（牙龈沟），以小幅水平震颤的方式轻轻刷动，每次覆盖2-3颗牙。<br>
+                                <strong>关键</strong>：震颤动作主要用于清除牙龈沟内的牙菌斑，而非大幅拉锯式横刷，以避免损伤牙龈和牙齿颈部。<br>
+                                <strong>时长</strong>：每次刷牙至少2分钟，每天早晚各一次。</p>
+                            </div>
+                            <div class="knowledge-point">
+                                <h4><i class="fas fa-thread"></i> 牙线正确使用方法</h4>
+                                <p><strong>步骤</strong>：1) 取约45cm牙线绕于中指；2) 对准牙缝，以轻柔的拉锯式动作滑入牙龈沟底；3) 将牙线紧贴一侧牙面，呈"C"形包绕牙齿，从沟底向咬合面方向提拉刮除菌斑；4) 清洁对侧牙面；5) 每清洁一个牙缝后，用纸巾擦净或使用清洁段牙线。<br>
+                                <strong>频率</strong>：建议每晚睡前使用一次。<br>
+                                <strong>注意事项</strong>：出血是正常的，坚持一周会改善。</p>
+                            </div>
+                            <div class="knowledge-point">
+                                <h4><i class="fas fa-shower"></i> 冲牙器（水牙线）使用指南</h4>
+                                <p><strong>原理</strong>：利用高压脉冲水流冲走牙缝和牙龈沟内的食物残渣及松散菌斑。<br>
+                                <strong>定位</strong>：适合作为刷牙和传统牙线的辅助工具，但不能替代传统牙线对邻面菌斑的机械刮除作用。<br>
+                                <strong>适用人群</strong>：戴牙套、种植牙、牙桥、牙缝较大者。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
         </main>
     </div>
@@ -1022,6 +1068,74 @@
             }
         ];
 
+        // 视频数据
+        const videoData = [
+            {
+                id: 1,
+                title: "巴氏刷牙法标准操作演示",
+                description: "专业牙医现场演示，45度角水平震颤，有效清洁牙龈沟",
+                thumbnail: "https://images.unsplash.com/photo-1606811971618-4486d14f1585?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+                link: "https://www.bilibili.com/video/BV1qJ411D7z4/",
+                duration: "3:45"
+            },
+            {
+                id: 2,
+                title: "牙线正确使用方法教学",
+                description: "分步骤教学，如何有效清除牙缝菌斑预防邻面龋",
+                thumbnail: "https://images.unsplash.com/photo-1588776814546-daab30f310ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+                link: "https://www.bilibili.com/video/BV1NJ411D7z4/",
+                duration: "4:20"
+            },
+            {
+                id: 3,
+                title: "冲牙器使用指南",
+                description: "高压脉冲水流辅助清洁，适合牙缝较大者",
+                thumbnail: "https://images.unsplash.com/photo-1559591936-2c6cbe7c4b8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+                link: "https://www.bilibili.com/video/BV1NJ411D7z5/",
+                duration: "5:10"
+            },
+            {
+                id: 4,
+                title: "牙周炎早期症状识别",
+                description: "自我检查方法，早期发现早干预",
+                thumbnail: "https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+                link: "https://www.bilibili.com/video/BV1NJ411D7z6/",
+                duration: "6:15"
+            },
+            {
+                id: 5,
+                title: "洗牙全过程解析",
+                description: "超声波洁治+抛光，了解专业洗牙步骤",
+                thumbnail: "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+                link: "https://www.bilibili.com/video/BV1NJ411D7z7/",
+                duration: "8:30"
+            },
+            {
+                id: 6,
+                title: "口腔健康7天改善计划",
+                description: "专为大学生设计，建立良好口腔护理习惯",
+                thumbnail: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+                link: "https://www.bilibili.com/video/BV1NJ411D7z8/",
+                duration: "12:45"
+            },
+            {
+                id: 7,
+                title: "如何选择适合自己的牙刷和牙膏",
+                description: "专业牙医教你根据牙龈状况选择合适的口腔护理产品",
+                thumbnail: "https://images.unsplash.com/photo-1622484202070-707d6d816b5a?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+                link: "https://www.bilibili.com/video/BV1NJ411D7z9/",
+                duration: "7:20"
+            },
+            {
+                id: 8,
+                title: "口腔溃疡与牙周炎的防治区别",
+                description: "讲解两种常见口腔问题的区别和正确处理方法",
+                thumbnail: "https://images.unsplash.com/photo-1556228578-9c360e1d8d6f?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+                link: "https://www.bilibili.com/video/BV1NJ411D7z0/",
+                duration: "9:15"
+            }
+        ];
+
         const knowledgeBase = {
             "牙周炎": "牙周炎是由牙菌斑细菌引发的慢性炎症，破坏牙龈、牙周膜和牙槽骨，是成年人失牙的首要原因。它通常始于可逆的牙龈炎(红肿、出血)，若未干预，则发展为不可逆的牙周炎，出现牙周袋和牙槽骨吸收。",
             "牙龈出血": "牙龈出血通常是牙龈炎的典型表现，此时炎症仅限于牙龈软组织，通过清洁可完全逆转。若长期忽视，炎症会向深层发展，破坏牙槽骨，这才演变为不可逆的牙周炎。简单来说:能止住的出血多是牙龈炎，伴随牙齿松动或牙龈萎缩的出血，往往已是牙周炎。",
@@ -1044,6 +1158,7 @@
         const featuresContainer = document.getElementById('features-container');
         const innovativeFeaturesDiv = document.getElementById('innovative-features');
         const basicFeaturesDiv = document.getElementById('basic-features');
+        const videoGrid = document.getElementById('video-grid');
         const navLinks = document.querySelectorAll('.nav-menu a');
         const panels = document.querySelectorAll('.content-panel');
         const chatMessages = document.getElementById('chat-messages');
@@ -1055,6 +1170,7 @@
         // 初始化
         document.addEventListener('DOMContentLoaded', function() {
             loadQuestionnaire();
+            loadVideos();
             setupEventListeners();
             updateNavigation();
         });
@@ -1135,6 +1251,28 @@
 
         function updateProgress() {
             questionProgress.textContent = `${currentQuestionIndex + 1}/${questionnaireData.length}`;
+        }
+
+        // 视频中心
+        function loadVideos() {
+            videoGrid.innerHTML = videoData.map(video => `
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="${video.thumbnail}" alt="${video.title}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1559591936-2c6cbe7c4b8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80'">
+                        <div class="play-icon"><i class="fas fa-play"></i></div>
+                        <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 2px 6px; border-radius: 3px; font-size: 0.8rem;">
+                            ${video.duration}
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <h4>${video.title}</h4>
+                        <p>${video.description}</p>
+                        <button class="btn-watch" onclick="window.open('${video.link}', '_blank')">
+                            <i class="fas fa-play-circle"></i> 观看视频
+                        </button>
+                    </div>
+                </div>
+            `).join('');
         }
 
         // AI风险评估
@@ -1231,7 +1369,7 @@
             // 显示特征工程结果
             featuresContainer.style.display = 'block';
             
-            // 复合特征显示 - 8个特征
+            // 复合特征显示
             let innovativeHtml = '<h5 style="color: var(--primary-color); margin-bottom: 1rem;">🔬 复合特征分析</h5>';
             
             const innovativeFeatures = [
