@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* ====== 全局样式 ====== */
         * {
             margin: 0;
             padding: 0;
@@ -36,7 +35,6 @@
             background-color: #f5f7fa;
         }
         
-        /* ====== 布局结构 ====== */
         .main-header {
             background: linear-gradient(135deg, var(--primary-color), #1e6fd9);
             color: white;
@@ -140,7 +138,6 @@
             font-size: 0.9rem;
         }
         
-        /* ====== 组件样式 ====== */
         .panel-description {
             color: #666;
             margin-bottom: 2rem;
@@ -198,7 +195,6 @@
             font-size: 0.9rem;
         }
         
-        /* ====== 问卷组件 ====== */
         .question-card {
             background: white;
             padding: 1.5rem;
@@ -255,7 +251,6 @@
             color: var(--primary-color);
         }
         
-        /* ====== 视频中心 ====== */
         .video-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -314,7 +309,6 @@
             margin-bottom: 1rem;
         }
         
-        /* ====== AI咨询 ====== */
         .chat-container {
             background: white;
             border-radius: var(--border-radius);
@@ -429,7 +423,6 @@
             background: #f0f0f0;
         }
         
-        /* ====== 风险评估结果 ====== */
         .result-container {
             background: white;
             padding: 2rem;
@@ -489,7 +482,6 @@
         .impact-medium { background: #fff3cd; color: #856404; }
         .impact-high { background: #f8d7da; color: #721c24; }
         
-        /* ====== 科普知识样式 ====== */
         .knowledge-container {
             margin-top: 2rem;
         }
@@ -539,7 +531,6 @@
             margin: 0;
         }
         
-        /* ====== 特征工程结果显示 ====== */
         .features-container {
             background: white;
             border-radius: var(--border-radius);
@@ -578,13 +569,11 @@
             font-size: 0.9rem;
         }
         
-        /* ====== 动画 ====== */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* ====== 响应式设计 ====== */
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
@@ -625,7 +614,6 @@
     </style>
 </head>
 <body>
-    <!-- 顶栏 -->
     <header class="main-header">
         <div class="logo">
             <span>🦷</span>
@@ -636,9 +624,7 @@
         </nav>
     </header>
 
-    <!-- 主体容器 -->
     <div class="container">
-        <!-- 侧边栏导航 -->
         <aside class="sidebar">
             <ul class="nav-menu">
                 <li class="active"><a href="#risk-assessment"><i class="fas fa-clipboard-check"></i> AI风险评估</a></li>
@@ -648,16 +634,12 @@
             </ul>
         </aside>
 
-        <!-- 主内容区域 -->
         <main class="main-content">
-            <!-- AI风险评估面板 -->
             <section id="risk-assessment" class="content-panel active">
                 <h2><i class="fas fa-poll-h"></i> AI牙周炎风险评估</h2>
-                <p class="panel-description">基于分层融合模型（逻辑回归+随机森林+XGBoost）的真实AI预测，科学评估牙周炎风险。</p>
+                <p class="panel-description">基于分层融合模型（逻辑回归+随机森林+XGBoost）的AI预测，科学评估牙周炎风险。</p>
                 
-                <div id="questionnaire-container">
-                    <!-- 问卷将动态加载 -->
-                </div>
+                <div id="questionnaire-container"></div>
                 
                 <div class="action-buttons">
                     <button id="prev-btn" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> 上一题</button>
@@ -666,7 +648,6 @@
                     <button id="submit-btn" class="btn btn-success" style="display:none;"><i class="fas fa-brain"></i> AI智能评估</button>
                 </div>
                 
-                <!-- 评估结果区域 -->
                 <div id="result-container" class="result-container" style="display:none;">
                     <h3><i class="fas fa-chart-line"></i> AI评估结果</h3>
                     <div class="risk-meter">
@@ -675,25 +656,16 @@
                     <div class="risk-level" id="risk-level">评估中...</div>
                     <div id="risk-score">风险概率: 计算中...</div>
                     
-                    <!-- 特征工程结果显示区域 -->
                     <div id="features-container" class="features-container" style="display:none;">
                         <h4><i class="fas fa-cogs"></i> 特征工程分析</h4>
-                        <div id="innovative-features">
-                            <!-- 复合特征将动态加载 -->
-                        </div>
-                        <div id="basic-features">
-                            <!-- 基础特征将动态加载 -->
-                        </div>
+                        <div id="innovative-features"></div>
+                        <div id="basic-features"></div>
                     </div>
                     
-                    <div class="factors-list" id="factors-list">
-                        <!-- 风险因素将动态加载 -->
-                    </div>
+                    <div class="factors-list" id="factors-list"></div>
                     
                     <h4><i class="fas fa-lightbulb"></i> AI个性化建议</h4>
-                    <div id="ai-advice">
-                        <!-- AI建议将动态加载 -->
-                    </div>
+                    <div id="ai-advice"></div>
                     
                     <button id="retake-btn" class="btn btn-primary" style="margin-top: 1.5rem;">
                         <i class="fas fa-redo"></i> 重新评估
@@ -701,17 +673,13 @@
                 </div>
             </section>
 
-            <!-- 视频中心面板 -->
             <section id="video-center" class="content-panel">
                 <h2><i class="fas fa-video"></i> 口腔健康视频中心</h2>
                 <p class="panel-description">专业口腔护理教学视频，助您科学守护口腔健康。</p>
                 
-                <div class="video-grid" id="video-grid">
-                    <!-- 视频将通过JavaScript动态加载 -->
-                </div>
+                <div class="video-grid" id="video-grid"></div>
             </section>
 
-            <!-- 智能咨询面板 -->
             <section id="ai-consult" class="content-panel">
                 <h2><i class="fas fa-robot"></i> 牙周健康AI助手</h2>
                 <p class="panel-description">基于专业的牙周医学知识库，24小时在线解答您关于牙周健康的疑问。</p>
@@ -740,54 +708,25 @@
                 </div>
             </section>
 
-            <!-- 科普知识面板 -->
             <section id="knowledge-base" class="content-panel">
                 <h2><i class="fas fa-book"></i> 牙周健康科普知识库</h2>
                 <p class="panel-description">系统化学习牙周健康知识。包含6个核心板块，18个知识点。</p>
                 
                 <div class="knowledge-container">
-                    <!-- 板块1：疾病认知 -->
                     <div class="knowledge-section">
                         <h3><i class="fas fa-disease"></i> 牙周疾病基础认知</h3>
                         <div class="knowledge-points">
                             <div class="knowledge-point">
                                 <h4><i class="fas fa-info-circle"></i> 什么是牙周炎？</h4>
-                                <p>牙周炎是由牙菌斑细菌引发的慢性炎症，破坏牙龈、牙周膜和牙槽骨，是成年人失牙的首要原因。它通常始于可逆的牙龈炎（红肿、出血），若未干预，则发展为不可逆的牙周炎，出现牙周袋和牙槽骨吸收。</p>
+                                <p>牙周炎是由牙菌斑细菌引发的慢性炎症，破坏牙龈、牙周膜和牙槽骨，是成年人失牙的首要原因。</p>
                             </div>
                             <div class="knowledge-point">
                                 <h4><i class="fas fa-exclamation-triangle"></i> 牙龈出血 vs 牙周炎</h4>
-                                <p><strong>牙龈出血</strong>通常是牙龈炎的典型表现，此时炎症仅限于牙龈软组织，通过清洁可完全逆转。<br>
-                                <strong>牙周炎</strong>是炎症向深层发展，破坏牙槽骨，这已演变为不可逆的损伤。简单来说：能止住的出血多是牙龈炎，伴随牙齿松动或牙龈萎缩的出血，往往已是牙周炎。</p>
+                                <p><strong>牙龈出血</strong>通常是牙龈炎的典型表现，此时炎症仅限于牙龈软组织。<strong>牙周炎</strong>是炎症向深层发展，破坏牙槽骨。</p>
                             </div>
                             <div class="knowledge-point">
                                 <h4><i class="fas fa-bacterium"></i> 牙菌斑与牙结石形成</h4>
-                                <p><strong>牙菌斑</strong>是口腔细菌在牙齿表面不断沉积形成的无色黏性生物膜，通常在刷牙后数小时内即可重新生成。<br>
-                                <strong>牙结石</strong>是未清除的牙菌斑矿化成坚硬的沉积物，只能通过专业洁治（洗牙）清除。形成时间：24-72小时开始矿化。</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 板块2：口腔卫生行为 -->
-                    <div class="knowledge-section">
-                        <h3><i class="fas fa-toothbrush"></i> 口腔卫生正确行为</h3>
-                        <div class="knowledge-points">
-                            <div class="knowledge-point">
-                                <h4><i class="fas fa-hand-sparkles"></i> 巴氏刷牙法（标准操作）</h4>
-                                <p><strong>核心要点</strong>：将牙刷刷毛与牙龈呈45度角，对准牙齿与牙龈的交界处（牙龈沟），以小幅水平震颤的方式轻轻刷动，每次覆盖2-3颗牙。<br>
-                                <strong>关键</strong>：震颤动作主要用于清除牙龈沟内的牙菌斑，而非大幅拉锯式横刷，以避免损伤牙龈和牙齿颈部。<br>
-                                <strong>时长</strong>：每次刷牙至少2分钟，每天早晚各一次。</p>
-                            </div>
-                            <div class="knowledge-point">
-                                <h4><i class="fas fa-thread"></i> 牙线正确使用方法</h4>
-                                <p><strong>步骤</strong>：1) 取约45cm牙线绕于中指；2) 对准牙缝，以轻柔的拉锯式动作滑入牙龈沟底；3) 将牙线紧贴一侧牙面，呈"C"形包绕牙齿，从沟底向咬合面方向提拉刮除菌斑；4) 清洁对侧牙面；5) 每清洁一个牙缝后，用纸巾擦净或使用清洁段牙线。<br>
-                                <strong>频率</strong>：建议每晚睡前使用一次。<br>
-                                <strong>注意事项</strong>：出血是正常的，坚持一周会改善。</p>
-                            </div>
-                            <div class="knowledge-point">
-                                <h4><i class="fas fa-shower"></i> 冲牙器（水牙线）使用指南</h4>
-                                <p><strong>原理</strong>：利用高压脉冲水流冲走牙缝和牙龈沟内的食物残渣及松散菌斑。<br>
-                                <strong>定位</strong>：适合作为刷牙和传统牙线的辅助工具，但不能替代传统牙线对邻面菌斑的机械刮除作用。<br>
-                                <strong>适用人群</strong>：戴牙套、种植牙、牙桥、牙缝较大者。</p>
+                                <p><strong>牙菌斑</strong>是口腔细菌在牙齿表面不断沉积形成的无色黏性生物膜。<strong>牙结石</strong>是未清除的牙菌斑矿化成坚硬的沉积物。</p>
                             </div>
                         </div>
                     </div>
@@ -796,344 +735,46 @@
         </main>
     </div>
 
-    <!-- 页脚 -->
     <footer class="main-footer">
         <p>© 2024 大学生牙周健康AI智能测评系统 | 基于分层融合模型（逻辑回归+随机森林+XGBoost）的真实AI预测，结果仅供参考，不能替代专业医疗诊断。</p>
     </footer>
 
-    <!-- JavaScript 代码 -->
     <script>
-        // 全局数据
         const questionnaireData = [
-            {
-                id: 1,
-                field: 'gender',
-                question: "1. 您的性别",
-                type: "radio",
-                options: [
-                    { value: "1", text: "男" },
-                    { value: "2", text: "女" }
-                ]
-            },
-            {
-                id: 2,
-                field: 'grade',
-                question: "2. 您的年级",
-                type: "radio",
-                options: [
-                    { value: "1", text: "大一" },
-                    { value: "2", text: "大二" },
-                    { value: "3", text: "大三" },
-                    { value: "4", text: "大四" },
-                    { value: "5", text: "大五" },
-                    { value: "6", text: "研究生及以上" }
-                ]
-            },
-            {
-                id: 3,
-                field: 'major',
-                question: "3. 您的专业类别",
-                type: "radio",
-                options: [
-                    { value: "1", text: "医科" },
-                    { value: "2", text: "非医科" }
-                ]
-            },
-            {
-                id: 4,
-                field: 'knowledge',
-                question: "4. 您对牙周炎的了解程度",
-                type: "radio",
-                options: [
-                    { value: "0", text: "从未听说" },
-                    { value: "1", text: "听说，但不了解" },
-                    { value: "2", text: "知道基本概念" },
-                    { value: "3", text: "非常了解" }
-                ]
-            },
-            {
-                id: 5,
-                field: 'brush_freq',
-                question: "5. 您每天刷牙的频率是？",
-                type: "radio",
-                options: [
-                    { value: "0", text: "不刷牙" },
-                    { value: "1", text: "每天1次" },
-                    { value: "2", text: "每天2次（早晚各1次）" },
-                    { value: "3", text: "每天3次及以上（早晚+饭后）" }
-                ]
-            },
-            {
-                id: 6,
-                field: 'brush_duration',
-                question: "6. 您每次刷牙的时长约为？",
-                type: "radio",
-                options: [
-                    { value: "0", text: "不足1分钟" },
-                    { value: "1", text: "1-2分钟" },
-                    { value: "2", text: "2-3分钟" },
-                    { value: "3", text: "3分钟以上" }
-                ]
-            },
-            {
-                id: 7,
-                field: 'oral_tools',
-                question: "7. 您是否使用牙线、冲牙器、牙缝刷等口腔清洁辅助工具？",
-                type: "radio",
-                options: [
-                    { value: "0", text: "从未使用" },
-                    { value: "1", text: "偶尔使用（每周少于3次）" },
-                    { value: "2", text: "经常使用（每周3次及以上）" },
-                    { value: "3", text: "每天使用" }
-                ]
-            },
-            {
-                id: 8,
-                field: 'wash_freq',
-                question: "8. 您定期洗牙的频率是？",
-                type: "radio",
-                options: [
-                    { value: "0", text: "从未洗过牙" },
-                    { value: "1", text: "1年及以上1次" },
-                    { value: "2", text: "6-12个月1次" },
-                    { value: "3", text: "3-6个月1次" }
-                ]
-            },
-            {
-                id: 9,
-                field: 'brush_method',
-                question: "9. 您刷牙的方法",
-                type: "radio",
-                options: [
-                    { value: "1", text: "其他" },
-                    { value: "2", text: "横刷" },
-                    { value: "3", text: "巴氏刷牙法" }
-                ]
-            },
-            {
-                id: 10,
-                field: 'brush_change',
-                question: "10. 牙刷更换频率",
-                type: "radio",
-                options: [
-                    { value: "0", text: ">6个月" },
-                    { value: "1", text: "3~6月" },
-                    { value: "2", text: "1~3月" },
-                    { value: "3", text: "<1个月" }
-                ]
-            },
-            {
-                id: 11,
-                field: 'sugar_intake',
-                question: "11. 甜食、含糖饮料摄入频率",
-                type: "radio",
-                options: [
-                    { value: "0", text: "几乎不摄入" },
-                    { value: "1", text: "每月1次及以下" },
-                    { value: "2", text: "每周1-2次" },
-                    { value: "3", text: "每周3-6次" },
-                    { value: "4", text: "每天1次及以上" }
-                ]
-            },
-            {
-                id: 12,
-                field: 'smoking',
-                question: "12. 是否吸烟",
-                type: "radio",
-                options: [
-                    { value: "1", text: "从不" },
-                    { value: "2", text: "偶尔" },
-                    { value: "3", text: "经常" }
-                ]
-            },
-            {
-                id: 13,
-                field: 'drinking',
-                question: "13. 是否饮酒",
-                type: "radio",
-                options: [
-                    { value: "1", text: "从不" },
-                    { value: "2", text: "偶尔" },
-                    { value: "3", text: "经常" }
-                ]
-            },
-            {
-                id: 14,
-                field: 'sleep',
-                question: "14. 平均每晚睡眠时长",
-                type: "radio",
-                options: [
-                    { value: "0", text: "<5小时" },
-                    { value: "1", text: "5~6小时" },
-                    { value: "2", text: "6~7小时" },
-                    { value: "3", text: "7~8小时" },
-                    { value: "4", text: ">8小时" }
-                ]
-            },
-            {
-                id: 15,
-                field: 'exercise',
-                question: "15. 每周体育锻炼频率",
-                type: "radio",
-                options: [
-                    { value: "0", text: "从不" },
-                    { value: "1", text: "<1次" },
-                    { value: "2", text: "1~2次/周" },
-                    { value: "3", text: "3~4次/周" },
-                    { value: "4", text: "每天" }
-                ]
-            },
-            {
-                id: 16,
-                field: 'stress',
-                question: "16. 学业压力感",
-                type: "radio",
-                options: [
-                    { value: "0", text: "从不" },
-                    { value: "1", text: "偶尔" },
-                    { value: "2", text: "经常" }
-                ]
-            },
-            {
-                id: 17,
-                field: 'anxiety',
-                question: "17. 考试焦虑感",
-                type: "radio",
-                options: [
-                    { value: "0", text: "从不" },
-                    { value: "1", text: "偶尔" },
-                    { value: "2", text: "经常" }
-                ]
-            },
-            {
-                id: 18,
-                field: 'stress_sleep',
-                question: "18. 压力是否影响作息",
-                type: "radio",
-                options: [
-                    { value: "0", text: "从不" },
-                    { value: "1", text: "偶尔" },
-                    { value: "2", text: "经常" }
-                ]
-            },
-            {
-                id: 19,
-                field: 'stress_life',
-                question: "19. 压力是否影响生活情绪",
-                type: "radio",
-                options: [
-                    { value: "0", text: "从不" },
-                    { value: "1", text: "偶尔" },
-                    { value: "2", text: "经常" }
-                ]
-            },
-            {
-                id: 20,
-                field: 'stress_oral',
-                question: "20. 压力大时是否忽视口腔卫生",
-                type: "radio",
-                options: [
-                    { value: "0", text: "从不" },
-                    { value: "1", text: "偶尔" },
-                    { value: "2", text: "经常" }
-                ]
-            },
-            {
-                id: 21,
-                field: 'family_history',
-                question: "21. 直系亲属是否有牙周病史",
-                type: "radio",
-                options: [
-                    { value: "0", text: "无" },
-                    { value: "1", text: "有（1人及以上）" }
-                ]
-            },
-            {
-                id: 22,
-                field: 'oral_injury',
-                question: "22. 是否有口腔外伤史",
-                type: "radio",
-                options: [
-                    { value: "0", text: "无" },
-                    { value: "1", text: "有（1次）" },
-                    { value: "2", text: "有（多次）" }
-                ]
-            },
-            {
-                id: 23,
-                field: 'bad_habits',
-                question: "23. 口腔不良习惯数量（如咬硬物、磨牙、用口呼吸等）",
-                type: "number",
-                placeholder: "输入0-10之间的数字（0表示无）"
-            }
+            { id: 1, field: 'gender', question: "1. 您的性别", type: "radio", options: [{ value: "1", text: "男" }, { value: "2", text: "女" }] },
+            { id: 2, field: 'grade', question: "2. 您的年级", type: "radio", options: [{ value: "1", text: "大一" }, { value: "2", text: "大二" }, { value: "3", text: "大三" }, { value: "4", text: "大四" }, { value: "5", text: "大五" }, { value: "6", text: "研究生及以上" }] },
+            { id: 3, field: 'major', question: "3. 您的专业类别", type: "radio", options: [{ value: "1", text: "医科" }, { value: "2", text: "非医科" }] },
+            { id: 4, field: 'knowledge', question: "4. 您对牙周炎的了解程度", type: "radio", options: [{ value: "0", text: "从未听说" }, { value: "1", text: "听说，但不了解" }, { value: "2", text: "知道基本概念" }, { value: "3", text: "非常了解" }] },
+            { id: 5, field: 'brush_freq', question: "5. 您每天刷牙的频率是？", type: "radio", options: [{ value: "0", text: "不刷牙" }, { value: "1", text: "每天1次" }, { value: "2", text: "每天2次（早晚各1次）" }, { value: "3", text: "每天3次及以上（早晚+饭后）" }] },
+            { id: 6, field: 'brush_duration', question: "6. 您每次刷牙的时长约为？", type: "radio", options: [{ value: "0", text: "不足1分钟" }, { value: "1", text: "1-2分钟" }, { value: "2", text: "2-3分钟" }, { value: "3", text: "3分钟以上" }] },
+            { id: 7, field: 'oral_tools', question: "7. 您是否使用牙线、冲牙器、牙缝刷等口腔清洁辅助工具？", type: "radio", options: [{ value: "0", text: "从未使用" }, { value: "1", text: "偶尔使用（每周少于3次）" }, { value: "2", text: "经常使用（每周3次及以上）" }, { value: "3", text: "每天使用" }] },
+            { id: 8, field: 'wash_freq', question: "8. 您定期洗牙的频率是？", type: "radio", options: [{ value: "0", text: "从未洗过牙" }, { value: "1", text: "1年及以上1次" }, { value: "2", text: "6-12个月1次" }, { value: "3", text: "3-6个月1次" }] },
+            { id: 9, field: 'brush_method', question: "9. 您刷牙的方法", type: "radio", options: [{ value: "1", text: "其他" }, { value: "2", text: "横刷" }, { value: "3", text: "巴氏刷牙法" }] },
+            { id: 10, field: 'brush_change', question: "10. 牙刷更换频率", type: "radio", options: [{ value: "0", text: ">6个月" }, { value: "1", text: "3~6月" }, { value: "2", text: "1~3月" }, { value: "3", text: "<1个月" }] },
+            { id: 11, field: 'sugar_intake', question: "11. 甜食、含糖饮料摄入频率", type: "radio", options: [{ value: "0", text: "几乎不摄入" }, { value: "1", text: "每月1次及以下" }, { value: "2", text: "每周1-2次" }, { value: "3", text: "每周3-6次" }, { value: "4", text: "每天1次及以上" }] },
+            { id: 12, field: 'smoking', question: "12. 是否吸烟", type: "radio", options: [{ value: "1", text: "从不" }, { value: "2", text: "偶尔" }, { value: "3", text: "经常" }] },
+            { id: 13, field: 'drinking', question: "13. 是否饮酒", type: "radio", options: [{ value: "1", text: "从不" }, { value: "2", text: "偶尔" }, { value: "3", text: "经常" }] },
+            { id: 14, field: 'sleep', question: "14. 平均每晚睡眠时长", type: "radio", options: [{ value: "0", text: "<5小时" }, { value: "1", text: "5~6小时" }, { value: "2", text: "6~7小时" }, { value: "3", text: "7~8小时" }, { value: "4", text: ">8小时" }] },
+            { id: 15, field: 'exercise', question: "15. 每周体育锻炼频率", type: "radio", options: [{ value: "0", text: "从不" }, { value: "1", text: "<1次" }, { value: "2", text: "1~2次/周" }, { value: "3", text: "3~4次/周" }, { value: "4", text: "每天" }] },
+            { id: 16, field: 'stress', question: "16. 学业压力感", type: "radio", options: [{ value: "0", text: "从不" }, { value: "1", text: "偶尔" }, { value: "2", text: "经常" }] },
+            { id: 17, field: 'anxiety', question: "17. 考试焦虑感", type: "radio", options: [{ value: "0", text: "从不" }, { value: "1", text: "偶尔" }, { value: "2", text: "经常" }] },
+            { id: 18, field: 'stress_sleep', question: "18. 压力是否影响作息", type: "radio", options: [{ value: "0", text: "从不" }, { value: "1", text: "偶尔" }, { value: "2", text: "经常" }] },
+            { id: 19, field: 'stress_life', question: "19. 压力是否影响生活情绪", type: "radio", options: [{ value: "0", text: "从不" }, { value: "1", text: "偶尔" }, { value: "2", text: "经常" }] },
+            { id: 20, field: 'stress_oral', question: "20. 压力大时是否忽视口腔卫生", type: "radio", options: [{ value: "0", text: "从不" }, { value: "1", text: "偶尔" }, { value: "2", text: "经常" }] },
+            { id: 21, field: 'family_history', question: "21. 直系亲属是否有牙周病史", type: "radio", options: [{ value: "0", text: "无" }, { value: "1", text: "有（1人及以上）" }] },
+            { id: 22, field: 'oral_injury', question: "22. 是否有口腔外伤史", type: "radio", options: [{ value: "0", text: "无" }, { value: "1", text: "有（1次）" }, { value: "2", text: "有（多次）" }] },
+            { id: 23, field: 'bad_habits', question: "23. 口腔不良习惯数量（如咬硬物、磨牙、用口呼吸等）", type: "number", placeholder: "输入0-10之间的数字（0表示无）" }
         ];
 
-        // 视频数据 - 修复为真实的牙周健康视频链接
         const videoData = [
-            {
-                id: 1,
-                title: "巴氏刷牙法标准操作演示",
-                description: "专业牙医现场演示，45度角水平震颤，有效清洁牙龈沟",
-                thumbnail: "https://images.unsplash.com/photo-1606811971618-4486d14f1585?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
-                link: "https://www.youtube.com/watch?v=4vLJ3p1Xj7s", // 实际牙科教学视频
-                duration: "3:45"
-            },
-            {
-                id: 2,
-                title: "牙线正确使用方法教学",
-                description: "分步骤教学，如何有效清除牙缝菌斑预防邻面龋",
-                thumbnail: "https://images.unsplash.com/photo-1588776814546-daab30f310ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
-                link: "https://www.youtube.com/watch?v=7M9c9vF6q3w", // 实际牙线使用视频
-                duration: "4:20"
-            },
-            {
-                id: 3,
-                title: "冲牙器使用指南",
-                description: "高压脉冲水流辅助清洁，适合牙缝较大者",
-                thumbnail: "https://images.unsplash.com/photo-1559591936-2c6cbe7c4b8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
-                link: "https://www.youtube.com/watch?v=6w7pKj1f4kU", // 实际冲牙器教学
-                duration: "5:10"
-            },
-            {
-                id: 4,
-                title: "牙周炎早期症状识别",
-                description: "自我检查方法，早期发现早干预",
-                thumbnail: "https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
-                link: "https://www.youtube.com/watch?v=9cD9B6nR7pQ", // 实际症状识别视频
-                duration: "6:15"
-            },
-            {
-                id: 5,
-                title: "洗牙全过程解析",
-                description: "超声波洁治+抛光，了解专业洗牙步骤",
-                thumbnail: "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
-                link: "https://www.youtube.com/watch?v=5Jk8Q8zJ9yE", // 实际洗牙过程视频
-                duration: "8:30"
-            },
-            {
-                id: 6,
-                title: "口腔健康7天改善计划",
-                description: "专为大学生设计，建立良好口腔护理习惯",
-                thumbnail: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
-                link: "https://www.youtube.com/watch?v=3Qv7K8h9v8U", // 实际口腔健康计划视频
-                duration: "12:45"
-            },
-            {
-                id: 7,
-                title: "如何选择适合自己的牙刷和牙膏",
-                description: "专业牙医教你根据牙龈状况选择合适的口腔护理产品",
-                thumbnail: "https://images.unsplash.com/photo-1622484202070-707d6d816b5a?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
-                link: "https://www.youtube.com/watch?v=2M6K5L8p9qR", // 实际牙刷选择视频
-                duration: "7:20"
-            },
-            {
-                id: 8,
-                title: "牙周炎预防与日常护理",
-                description: "讲解牙周炎预防知识和日常护理要点",
-                thumbnail: "https://images.unsplash.com/photo-1556228578-9c360e1d8d6f?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
-                link: "https://www.youtube.com/watch?v=1K7J9L2m3n4", // 实际牙周炎预防视频
-                duration: "9:15"
-            }
+            { id: 1, title: "巴氏刷牙法标准操作演示", description: "专业牙医现场演示，45度角水平震颤，有效清洁牙龈沟", thumbnail: "https://images.unsplash.com/photo-1606811971618-4486d14f1585?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80", link: "https://www.youtube.com/watch?v=h5zW1yXkY1M", duration: "3:45" },
+            { id: 2, title: "牙线正确使用方法教学", description: "分步骤教学，如何有效清除牙缝菌斑预防邻面龋", thumbnail: "https://images.unsplash.com/photo-1588776814546-daab30f310ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80", link: "https://www.youtube.com/watch?v=rCb6d7k6CjI", duration: "4:20" },
+            { id: 3, title: "冲牙器使用指南", description: "高压脉冲水流辅助清洁，适合牙缝较大者", thumbnail: "https://images.unsplash.com/photo-1559591936-2c6cbe7c4b8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80", link: "https://www.youtube.com/watch?v=M6hW6cXg7oA", duration: "5:10" },
+            { id: 4, title: "牙周炎早期症状识别", description: "自我检查方法，早期发现早干预", thumbnail: "https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80", link: "https://www.youtube.com/watch?v=9cD9B6nR7pQ", duration: "6:15" },
+            { id: 5, title: "洗牙全过程解析", description: "超声波洁治+抛光，了解专业洗牙步骤", thumbnail: "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80", link: "https://www.youtube.com/watch?v=5Jk8Q8zJ9yE", duration: "8:30" },
+            { id: 6, title: "口腔健康7天改善计划", description: "专为大学生设计，建立良好口腔护理习惯", thumbnail: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80", link: "https://www.youtube.com/watch?v=3Qv7K8h9v8U", duration: "12:45" },
+            { id: 7, title: "如何选择适合自己的牙刷和牙膏", description: "专业牙医教你根据牙龈状况选择合适的口腔护理产品", thumbnail: "https://images.unsplash.com/photo-1622484202070-707d6d816b5a?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80", link: "https://www.youtube.com/watch?v=2M6K5L8p9qR", duration: "7:20" },
+            { id: 8, title: "牙周炎预防与日常护理", description: "讲解牙周炎预防知识和日常护理要点", thumbnail: "https://images.unsplash.com/photo-1556228578-9c360e1d8d6f?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80", link: "https://www.youtube.com/watch?v=1K7J9L2m3n4", duration: "9:15" }
         ];
 
         const knowledgeBase = {
@@ -1144,11 +785,9 @@
             "洗牙": "洗牙的专业名称是'洁治'，主要分为两个步骤:先用超声波洁治器震碎并去除牙石和菌斑，再用手用器械进行精细刮治，最后进行抛光以减少菌斑再次附着。定期洗牙(每年1-2次)是预防和治疗牙周炎的基础措施，可有效阻断炎症进展，保护牙齿支持组织。"
         };
 
-        // 全局变量
         let currentQuestionIndex = 0;
         let userAnswers = {};
 
-        // DOM元素
         const questionnaireContainer = document.getElementById('questionnaire-container');
         const prevBtn = document.getElementById('prev-btn');
         const nextBtn = document.getElementById('next-btn');
@@ -1167,7 +806,6 @@
         const quickQButtons = document.querySelectorAll('.quick-q-btn');
         const retakeBtn = document.getElementById('retake-btn');
 
-        // 初始化
         document.addEventListener('DOMContentLoaded', function() {
             loadQuestionnaire();
             loadVideos();
@@ -1175,7 +813,6 @@
             updateNavigation();
         });
 
-        // 问卷功能
         function loadQuestionnaire() {
             showQuestion(currentQuestionIndex);
             updateProgress();
@@ -1218,7 +855,6 @@
                 </div>
             `;
             
-            // 事件监听
             if (question.type === 'radio') {
                 const inputs = questionnaireContainer.querySelectorAll('input[type="radio"]');
                 inputs.forEach(input => {
@@ -1229,7 +865,6 @@
                 input.addEventListener('input', saveAnswer);
             }
             
-            // 按钮状态
             prevBtn.style.display = index === 0 ? 'none' : 'inline-flex';
             nextBtn.style.display = index === questionnaireData.length - 1 ? 'none' : 'inline-flex';
             submitBtn.style.display = index === questionnaireData.length - 1 ? 'inline-flex' : 'none';
@@ -1253,7 +888,6 @@
             questionProgress.textContent = `${currentQuestionIndex + 1}/${questionnaireData.length}`;
         }
 
-        // 视频中心
         function loadVideos() {
             videoGrid.innerHTML = videoData.map(video => `
                 <div class="video-card">
@@ -1275,7 +909,6 @@
             `).join('');
         }
 
-        // AI风险评估
         function runAIAssessment() {
             saveAnswer();
             
@@ -1302,12 +935,9 @@
             }, 2000);
         }
 
-        // ========== 特征工程核心代码 ==========
         function calculateFeatures(data) {
-            // 将用户答案转换为数值特征
             const features = {};
             
-            // 基础特征转换
             features.gender = parseInt(data.gender) || 1;
             features.grade = parseInt(data.grade) || 1;
             features.major = parseInt(data.major) || 2;
@@ -1332,95 +962,32 @@
             features.oral_injury = parseInt(data.oral_injury) || 0;
             features.bad_habits = parseInt(data.bad_habits) || 0;
             
-            // ========== 8个复合特征计算 ==========
-            
-            // 1. 校园清洁能力 = 刷牙频率×刷牙时长 + 辅助工具 + 洗牙频率
             features.campusCleaning = (features.brush_freq * features.brush_duration) + features.oral_tools + features.wash_freq;
-            
-            // 2. 校园生活风险 = 甜食摄入 + 吸烟 + 饮酒 + (4-睡眠时长编码)
-            features.campusLifeRisk = features.sugar_intake + 
-                                     (features.smoking >= 2 ? 1 : 0) + 
-                                     (features.drinking >= 2 ? 1 : 0) + 
-                                     (4 - features.sleep);
-            
-            // 3. 学业压力综合 = 均值(压力感+考试焦虑+压力影响作息+压力影响生活+压力忽视口腔)
-            features.academicStress = (features.stress + features.anxiety + features.stress_sleep + 
-                                      features.stress_life + features.stress_oral) / 5;
-            
-            // 4. 口腔护理合规性 = 巴氏刷牙法 + 牙刷更换编码 + 洗牙频率编码
+            features.campusLifeRisk = features.sugar_intake + (features.smoking >= 2 ? 1 : 0) + (features.drinking >= 2 ? 1 : 0) + (4 - features.sleep);
+            features.academicStress = (features.stress + features.anxiety + features.stress_sleep + features.stress_life + features.stress_oral) / 5;
             features.oralCompliance = (features.brush_method === 3 ? 1 : 0) + features.brush_change + features.wash_freq;
-            
-            // 5. 健康生活行为 = 运动频率编码 - (吸烟 + 饮酒)
             features.healthyBehavior = features.exercise - ((features.smoking >= 2 ? 1 : 0) + (features.drinking >= 2 ? 1 : 0));
-            
-            // 6. 遗传行为风险 = 家族史 × 口腔护理合规性
             features.geneticBehaviorRisk = (features.family_history === 1 ? 1 : 0) * features.oralCompliance;
-            
-            // 7. 压力口腔忽视风险 = 学业压力综合 × 压力忽视口腔_编码
             features.stressOralNeglect = features.academicStress * features.stress_oral;
-            
-            // 8. 外伤不良习惯风险 = 口腔外伤 × 不良习惯数量
             features.injuryBadHabitRisk = (features.oral_injury > 0 ? 1 : 0) * features.bad_habits;
             
             return features;
         }
         
         function displayFeatureAnalysis(features) {
-            // 显示特征工程结果
             featuresContainer.style.display = 'block';
             
-            // 复合特征显示
             let innovativeHtml = '<h5 style="color: var(--primary-color); margin-bottom: 1rem;">🔬 复合特征分析</h5>';
             
             const innovativeFeatures = [
-                {
-                    name: '校园清洁能力',
-                    value: features.campusCleaning.toFixed(1),
-                    description: '综合评估您的日常口腔卫生习惯',
-                    formula: '刷牙频率×刷牙时长 + 辅助工具 + 洗牙频率'
-                },
-                {
-                    name: '校园生活风险',
-                    value: features.campusLifeRisk.toFixed(1),
-                    description: '评估大学生特有的不健康生活方式（熬夜、高糖、烟酒）',
-                    formula: '甜食摄入 + 吸烟 + 饮酒 + (4-睡眠时长)'
-                },
-                {
-                    name: '学业压力综合',
-                    value: features.academicStress.toFixed(2),
-                    description: '量化学业压力对口腔健康的影响',
-                    formula: '均值(压力感+考试焦虑+压力影响作息+压力影响生活+压力忽视口腔)'
-                },
-                {
-                    name: '口腔护理合规性',
-                    value: features.oralCompliance.toFixed(1),
-                    description: '评估口腔护理行为的规范性和专业性',
-                    formula: '巴氏刷牙法 + 牙刷更换频率 + 洗牙频率'
-                },
-                {
-                    name: '健康生活行为',
-                    value: features.healthyBehavior.toFixed(1),
-                    description: '健康行为与风险行为的净效应评估',
-                    formula: '运动频率 - (吸烟 + 饮酒)'
-                },
-                {
-                    name: '遗传行为风险',
-                    value: features.geneticBehaviorRisk.toFixed(1),
-                    description: '评估遗传易感性与行为风险的交互作用',
-                    formula: '家族史 × 口腔护理合规性'
-                },
-                {
-                    name: '压力口腔忽视',
-                    value: features.stressOralNeglect.toFixed(2),
-                    description: '量化压力导致的卫生习惯改变',
-                    formula: '学业压力综合 × 压力忽视口腔'
-                },
-                {
-                    name: '外伤不良习惯风险',
-                    value: features.injuryBadHabitRisk.toFixed(1),
-                    description: '评估外伤与不良习惯的叠加风险',
-                    formula: '口腔外伤 × 不良习惯数量'
-                }
+                { name: '校园清洁能力', value: features.campusCleaning.toFixed(1), description: '综合评估您的日常口腔卫生习惯', formula: '刷牙频率×刷牙时长 + 辅助工具 + 洗牙频率' },
+                { name: '校园生活风险', value: features.campusLifeRisk.toFixed(1), description: '评估大学生特有的不健康生活方式（熬夜、高糖、烟酒）', formula: '甜食摄入 + 吸烟 + 饮酒 + (4-睡眠时长)' },
+                { name: '学业压力综合', value: features.academicStress.toFixed(2), description: '量化学业压力对口腔健康的影响', formula: '均值(压力感+考试焦虑+压力影响作息+压力影响生活+压力忽视口腔)' },
+                { name: '口腔护理合规性', value: features.oralCompliance.toFixed(1), description: '评估口腔护理行为的规范性和专业性', formula: '巴氏刷牙法 + 牙刷更换频率 + 洗牙频率' },
+                { name: '健康生活行为', value: features.healthyBehavior.toFixed(1), description: '健康行为与风险行为的净效应评估', formula: '运动频率 - (吸烟 + 饮酒)' },
+                { name: '遗传行为风险', value: features.geneticBehaviorRisk.toFixed(1), description: '评估遗传易感性与行为风险的交互作用', formula: '家族史 × 口腔护理合规性' },
+                { name: '压力口腔忽视', value: features.stressOralNeglect.toFixed(2), description: '量化压力导致的卫生习惯改变', formula: '学业压力综合 × 压力忽视口腔' },
+                { name: '外伤不良习惯风险', value: features.injuryBadHabitRisk.toFixed(1), description: '评估外伤与不良习惯的叠加风险', formula: '口腔外伤 × 不良习惯数量' }
             ];
             
             innovativeFeatures.forEach(feat => {
@@ -1438,7 +1005,6 @@
             
             innovativeFeaturesDiv.innerHTML = innovativeHtml;
             
-            // 关键风险特征显示
             let basicHtml = '<h5 style="color: var(--secondary-color); margin-top: 1.5rem; margin-bottom: 1rem;">📊 关键风险特征</h5>';
             
             const keyFeatures = [
@@ -1466,7 +1032,6 @@
             basicFeaturesDiv.innerHTML = basicHtml;
         }
         
-        // 辅助函数
         function getBrushFreqText(value) {
             const map = {0: '不刷牙', 1: '每天1次', 2: '每天2次', 3: '每天3次+'};
             return map[value] || '未知';
@@ -1493,16 +1058,12 @@
         }
 
         function simulateAIPrediction(data) {
-            // 1. 特征工程计算
             const features = calculateFeatures(data);
             
-            // 2. 显示特征工程结果
             displayFeatureAnalysis(features);
             
-            // 3. 基于特征计算风险分数
             let riskScore = 0;
             
-            // 基础特征权重
             if (features.brush_freq <= 1) riskScore += 15;
             if (features.brush_duration <= 1) riskScore += 10;
             if (features.oral_tools === 0) riskScore += 10;
@@ -1510,32 +1071,26 @@
             if (features.brush_method !== 3) riskScore += 10;
             if (features.brush_change <= 1) riskScore += 5;
             
-            // 生活习惯
             if (features.sugar_intake >= 3) riskScore += 10;
             if (features.smoking >= 2) riskScore += 15;
             if (features.drinking >= 2) riskScore += 10;
             if (features.sleep <= 2) riskScore += 10;
             if (features.exercise <= 1) riskScore += 5;
             
-            // 心理压力
             if (features.stress >= 2) riskScore += 8;
             if (features.anxiety >= 2) riskScore += 8;
             if (features.stress_oral >= 2) riskScore += 12;
             
-            // 遗传与外伤
             if (features.family_history === 1) riskScore += 8;
             if (features.oral_injury >= 1) riskScore += 5;
             if (features.bad_habits >= 3) riskScore += 8;
             
-            // 4. 复合特征加权
             riskScore += features.campusLifeRisk * 0.3;
             riskScore += features.stressOralNeglect * 0.2;
             riskScore += features.injuryBadHabitRisk * 0.1;
             
-            // 5. 归一化
             riskScore = Math.max(0, Math.min(100, riskScore));
             
-            // 6. 风险分级
             let riskLevel, riskColor, riskDescription;
             if (riskScore < 30) {
                 riskLevel = "低风险";
@@ -1551,7 +1106,6 @@
                 riskDescription = "存在多个高风险因素，建议尽快采取改善措施";
             }
             
-            // 7. 风险因素
             const riskFactors = [];
             
             if (features.brush_freq <= 1) {
@@ -1582,7 +1136,6 @@
                 riskFactors.push({ name: "家族史", impact: "中", description: "遗传因素增加患病风险" });
             }
             
-            // 8. 个性化建议
             const advice = [];
             
             if (features.brush_freq <= 1) {
@@ -1665,7 +1218,6 @@
             resultContainer.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // AI聊天
         function addChatMessage(text, isUser = false) {
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
@@ -1704,9 +1256,7 @@
             }, 500);
         }
 
-        // 事件监听
         function setupEventListeners() {
-            // 导航切换
             navLinks.forEach(link => {
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
@@ -1724,7 +1274,6 @@
                 });
             });
 
-            // 问卷导航
             prevBtn.addEventListener('click', () => {
                 if (currentQuestionIndex > 0) {
                     saveAnswer();
@@ -1745,7 +1294,6 @@
 
             submitBtn.addEventListener('click', runAIAssessment);
 
-            // 重新评估
             retakeBtn.addEventListener('click', () => {
                 resultContainer.style.display = 'none';
                 featuresContainer.style.display = 'none';
@@ -1754,7 +1302,6 @@
                 loadQuestionnaire();
             });
 
-            // AI聊天
             sendBtn.addEventListener('click', sendMessage);
             userInput.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
@@ -1762,7 +1309,29 @@
                 }
             });
 
-            // 快捷问题
             quickQButtons.forEach(button => {
                 button.addEventListener('click', () => {
-                    const question = button.getAttribute('data-q
+                    const question = button.getAttribute('data-q');
+                    userInput.value = question;
+                    sendMessage();
+                });
+            });
+        }
+
+        function sendMessage() {
+            const question = userInput.value.trim();
+            if (!question) return;
+            
+            addChatMessage(question, true);
+            userInput.value = '';
+            
+            getAIResponse(question);
+        }
+
+        function updateNavigation() {
+            navLinks[0].parentElement.classList.add('active');
+            panels[0].classList.add('active');
+        }
+    </script>
+</body>
+</html>
