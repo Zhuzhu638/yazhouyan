@@ -679,7 +679,7 @@
                     <div id="features-container" class="features-container" style="display:none;">
                         <h4><i class="fas fa-cogs"></i> 特征工程分析</h4>
                         <div id="innovative-features">
-                            <!-- 创新特征将动态加载 -->
+                            <!-- 复合特征将动态加载 -->
                         </div>
                         <div id="basic-features">
                             <!-- 基础特征将动态加载 -->
@@ -1194,7 +1194,7 @@
             features.oral_injury = parseInt(data.oral_injury) || 0;
             features.bad_habits = parseInt(data.bad_habits) || 0;
             
-            // ========== 9个创新特征计算 ==========
+            // ========== 8个复合特征计算 ==========
             
             // 1. 校园清洁能力 = 刷牙频率×刷牙时长 + 辅助工具 + 洗牙频率
             features.campusCleaning = (features.brush_freq * features.brush_duration) + features.oral_tools + features.wash_freq;
@@ -1224,11 +1224,6 @@
             // 8. 外伤不良习惯风险 = 口腔外伤 × 不良习惯数量
             features.injuryBadHabitRisk = (features.oral_injury > 0 ? 1 : 0) * features.bad_habits;
             
-            // 9. 口腔卫生综合评分 (归一化到0-10)
-            features.oralHygieneScore = (features.brush_freq + features.brush_duration + 
-                                        features.oral_tools + (features.brush_method === 3 ? 3 : 1) + 
-                                        features.brush_change) / 5;
-            
             return features;
         }
         
@@ -1236,8 +1231,8 @@
             // 显示特征工程结果
             featuresContainer.style.display = 'block';
             
-            // 创新特征显示
-            let innovativeHtml = '<h5 style="color: var(--primary-color); margin-bottom: 1rem;">🎯 创新特征（9个）</h5>';
+            // 复合特征显示 - 8个特征
+            let innovativeHtml = '<h5 style="color: var(--primary-color); margin-bottom: 1rem;">🔬 复合特征分析</h5>';
             
             const innovativeFeatures = [
                 {
@@ -1265,6 +1260,12 @@
                     formula: '巴氏刷牙法 + 牙刷更换频率 + 洗牙频率'
                 },
                 {
+                    name: '健康生活行为',
+                    value: features.healthyBehavior.toFixed(1),
+                    description: '健康行为与风险行为的净效应评估',
+                    formula: '运动频率 - (吸烟 + 饮酒)'
+                },
+                {
                     name: '遗传行为风险',
                     value: features.geneticBehaviorRisk.toFixed(1),
                     description: '评估遗传易感性与行为风险的交互作用',
@@ -1275,6 +1276,12 @@
                     value: features.stressOralNeglect.toFixed(2),
                     description: '量化压力导致的卫生习惯改变',
                     formula: '学业压力综合 × 压力忽视口腔'
+                },
+                {
+                    name: '外伤不良习惯风险',
+                    value: features.injuryBadHabitRisk.toFixed(1),
+                    description: '评估外伤与不良习惯的叠加风险',
+                    formula: '口腔外伤 × 不良习惯数量'
                 }
             ];
             
@@ -1293,8 +1300,8 @@
             
             innovativeFeaturesDiv.innerHTML = innovativeHtml;
             
-            // 关键基础特征显示
-            let basicHtml = '<h5 style="color: var(--secondary-color); margin-top: 1.5rem; margin-bottom: 1rem;">📊 关键基础特征（6个）</h5>';
+            // 关键风险特征显示
+            let basicHtml = '<h5 style="color: var(--secondary-color); margin-top: 1.5rem; margin-bottom: 1rem;">📊 关键风险特征</h5>';
             
             const keyFeatures = [
                 { name: '刷牙频率', value: getBrushFreqText(features.brush_freq), impact: features.brush_freq <= 1 ? '高风险' : features.brush_freq === 2 ? '中等' : '良好' },
@@ -1382,7 +1389,7 @@
             if (features.oral_injury >= 1) riskScore += 5;
             if (features.bad_habits >= 3) riskScore += 8;
             
-            // 4. 创新特征加权
+            // 4. 复合特征加权
             riskScore += features.campusLifeRisk * 0.3;
             riskScore += features.stressOralNeglect * 0.2;
             riskScore += features.injuryBadHabitRisk * 0.1;
